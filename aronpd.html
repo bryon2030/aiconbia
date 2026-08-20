@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AI를 직접 써보고, 경험을 콘텐츠와 작은 사업으로 연결하는 아론PD의 개인 브랜드 허브입니다." />
+  <meta name="theme-color" content="#f5f0e4" />
+  <title>아론PD | 경험을 콘텐츠와 작은 사업으로</title>
+  <style>
+    :root {
+      --paper: #f5f0e4;
+      --paper-deep: #ebe3d3;
+      --card: #fffdf7;
+      --moss: #284b36;
+      --moss-soft: #dfe8dc;
+      --gold: #bd9142;
+      --ink: #20231f;
+      --muted: #686b63;
+      --line: rgba(40, 75, 54, .16);
+      --shadow: 0 24px 70px rgba(52, 55, 43, .11);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 6% 6%, rgba(189,145,66,.14), transparent 25rem),
+        radial-gradient(circle at 96% 28%, rgba(40,75,54,.09), transparent 31rem),
+        var(--paper);
+      font-family: Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", system-ui, sans-serif;
+      line-height: 1.7;
+      word-break: keep-all;
+    }
+
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .wrap { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+
+    .skip {
+      position: fixed; left: 16px; top: -60px; z-index: 100;
+      padding: 10px 16px; border-radius: 10px; background: var(--moss); color: white;
+    }
+    .skip:focus { top: 12px; }
+
+    .nav {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(245,240,228,.88); backdrop-filter: blur(18px);
+      border-bottom: 1px solid transparent;
+    }
+    .nav.scrolled { border-color: var(--line); }
+    .nav-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; font-weight: 850; letter-spacing: -.03em; }
+    .brand-mark { width: 54px; height: 54px; display: grid; flex: 0 0 54px; place-items: center; overflow: hidden; border: 2px solid rgba(40,75,54,.18); border-radius: 50%; background: #e8e7e4; }
+    .brand-mark img { width: 100%; height: 100%; object-fit: contain; }
+    .nav-links { display: flex; align-items: center; gap: 25px; font-size: 14px; color: var(--muted); }
+    .nav-links a { text-decoration: none; }
+    .nav-links a:hover { color: var(--moss); }
+    .nav-cta { padding: 11px 18px; border-radius: 999px; background: var(--moss); color: white !important; font-weight: 750; }
+
+    .hero { padding: 74px 0 86px; }
+    .hero-grid { display: grid; grid-template-columns: 1.08fr .92fr; align-items: center; gap: clamp(46px, 7vw, 94px); }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 21px; color: var(--moss); font-size: 14px; font-weight: 800; letter-spacing: .08em; }
+    .eyebrow::before { content: ""; width: 33px; height: 1px; background: var(--gold); }
+    h1 { margin: 0; font-size: clamp(48px, 6.4vw, 82px); line-height: 1.08; letter-spacing: -.065em; }
+    h1 strong { display: block; color: var(--moss); }
+    .hero-copy { max-width: 650px; margin: 28px 0 0; color: #4f534c; font-size: clamp(17px, 2vw, 21px); line-height: 1.85; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+    .button { display: inline-flex; min-height: 54px; align-items: center; justify-content: center; gap: 9px; padding: 0 23px; border-radius: 999px; border: 1px solid var(--moss); text-decoration: none; font-weight: 800; transition: .22s ease; }
+    .button.primary { background: var(--moss); color: white; box-shadow: 0 12px 28px rgba(40,75,54,.22); }
+    .button.secondary { background: rgba(255,255,255,.52); color: var(--moss); }
+    .button:hover { transform: translateY(-2px); }
+    .hero-note { margin: 17px 0 0; color: var(--muted); font-size: 13px; }
+
+    .portrait-wrap { position: relative; min-height: 610px; }
+    .portrait-card { position: absolute; inset: 0 0 28px 45px; overflow: hidden; border-radius: 180px 180px 30px 30px; background: #d9d7d0; box-shadow: var(--shadow); }
+    .portrait-card img { width: 100%; height: 100%; object-fit: cover; object-position: center 17%; }
+    .portrait-label { position: absolute; left: 0; bottom: 0; width: min(295px, 74%); padding: 22px 24px; border: 1px solid rgba(255,255,255,.5); border-radius: 20px; background: rgba(255,253,247,.93); box-shadow: 0 18px 45px rgba(35,35,30,.13); backdrop-filter: blur(16px); }
+    .portrait-label b { display: block; color: var(--moss); font-size: 23px; letter-spacing: -.035em; }
+    .portrait-label span { display: block; margin-top: 2px; color: var(--muted); font-size: 14px; }
+    .orbit { position: absolute; top: 15px; right: -9px; width: 92px; height: 92px; display: grid; place-items: center; border-radius: 50%; background: var(--gold); color: #fffaf0; font-size: 12px; font-weight: 900; text-align: center; line-height: 1.35; transform: rotate(8deg); }
+
+    section { padding: 104px 0; }
+    .section-kicker { margin: 0 0 12px; color: var(--gold); font-weight: 850; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
+    .section-title { max-width: 760px; margin: 0; color: var(--ink); font-size: clamp(34px, 4.5vw, 57px); line-height: 1.18; letter-spacing: -.055em; }
+    .section-lead { max-width: 690px; margin: 21px 0 0; color: var(--muted); font-size: 18px; line-height: 1.85; }
+
+    .fit { padding-top: 25px; }
+    .fit-panel { padding: clamp(34px, 6vw, 72px); border-radius: var(--radius); background: var(--moss); color: white; box-shadow: var(--shadow); }
+    .fit-panel .section-kicker { color: #e2c27e; }
+    .fit-panel .section-title { color: white; }
+    .fit-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 42px; }
+    .fit-item { padding: 24px; border: 1px solid rgba(255,255,255,.17); border-radius: 19px; background: rgba(255,255,255,.07); font-size: 17px; }
+    .fit-item span { display: inline-grid; width: 28px; height: 28px; margin-right: 9px; place-items: center; border-radius: 50%; background: #e1bd6e; color: var(--moss); font-size: 13px; font-weight: 900; }
+
+    .roles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 46px; }
+    .role-card { min-height: 285px; padding: 31px; border: 1px solid var(--line); border-radius: 23px; background: rgba(255,253,247,.72); box-shadow: 0 14px 35px rgba(60,60,45,.06); }
+    .role-no { color: var(--gold); font-size: 13px; font-weight: 900; }
+    .role-card h3 { margin: 25px 0 12px; color: var(--moss); font-size: 25px; letter-spacing: -.045em; }
+    .role-card p { margin: 0; color: var(--muted); }
+
+    .ecosystem { background: rgba(255,255,255,.34); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .channel-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 46px; }
+    .channel { position: relative; display: block; padding: 28px 76px 28px 28px; overflow: hidden; border: 1px solid var(--line); border-radius: 22px; background: var(--card); text-decoration: none; transition: .22s ease; }
+    .channel:hover { transform: translateY(-3px); border-color: rgba(40,75,54,.42); }
+    .channel small { color: var(--gold); font-weight: 850; }
+    .channel h3 { margin: 7px 0 6px; color: var(--moss); font-size: 23px; letter-spacing: -.035em; }
+    .channel p { margin: 0; color: var(--muted); }
+    .channel .arrow { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: var(--moss-soft); color: var(--moss); }
+
+    .work-grid { display: grid; grid-template-columns: .83fr 1.17fr; gap: 66px; align-items: start; }
+    .work-list { display: grid; gap: 13px; }
+    .work-item { padding: 22px 24px; border-left: 3px solid var(--gold); border-radius: 0 17px 17px 0; background: rgba(255,253,247,.64); }
+    .work-item b { display: block; color: var(--moss); font-size: 18px; }
+    .work-item span { color: var(--muted); font-size: 14px; }
+
+    .story-card { display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; border-radius: var(--radius); background: var(--paper-deep); }
+    .story-visual { min-height: 500px; background: linear-gradient(150deg, var(--moss), #193527); color: white; display: flex; flex-direction: column; justify-content: space-between; padding: clamp(35px, 6vw, 70px); }
+    .story-visual strong { max-width: 410px; font-size: clamp(35px, 5vw, 62px); line-height: 1.15; letter-spacing: -.06em; }
+    .story-visual span { color: #e4c57e; font-weight: 800; }
+    .story-copy { padding: clamp(35px, 6vw, 70px); background: var(--card); display: flex; flex-direction: column; justify-content: center; }
+    .story-copy p { margin: 0 0 20px; color: #555950; font-size: 17px; line-height: 1.95; }
+    .story-copy p:last-child { margin: 0; }
+
+    .final { padding-bottom: 120px; }
+    .final-card { position: relative; overflow: hidden; padding: clamp(42px, 7vw, 82px); border-radius: 32px; background: var(--moss); color: white; text-align: center; box-shadow: var(--shadow); }
+    .final-card::after { content: ""; position: absolute; width: 360px; height: 360px; right: -160px; top: -190px; border: 1px solid rgba(255,255,255,.18); border-radius: 50%; box-shadow: 0 0 0 50px rgba(255,255,255,.025), 0 0 0 100px rgba(255,255,255,.02); }
+    .final-card h2 { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; font-size: clamp(38px, 5.7vw, 66px); line-height: 1.16; letter-spacing: -.06em; }
+    .final-card p { position: relative; z-index: 1; max-width: 620px; margin: 22px auto 33px; color: rgba(255,255,255,.74); font-size: 18px; }
+    .final-card .button { position: relative; z-index: 1; border-color: #e0bd70; background: #e0bd70; color: #1f3828; }
+
+    footer { padding: 30px 0 45px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
+    .footer-links a { text-decoration: none; }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.on { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      .nav-links a:not(.nav-cta) { display: none; }
+      .hero { padding-top: 43px; }
+      .hero-grid, .work-grid, .story-card { grid-template-columns: 1fr; }
+      .hero-grid { gap: 52px; }
+      .portrait-wrap { min-height: 560px; width: min(540px, 100%); margin: 0 auto; }
+      .roles-grid { grid-template-columns: 1fr; }
+      .role-card { min-height: 0; }
+      .story-visual { min-height: 410px; }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - 26px, 1180px); }
+      .nav-inner { min-height: 65px; }
+      .brand-mark { width: 46px; height: 46px; flex-basis: 46px; }
+      .nav-cta { padding: 9px 13px; font-size: 12px; }
+      .hero { padding: 42px 0 66px; }
+      h1 { font-size: clamp(43px, 14vw, 62px); }
+      .hero-copy { font-size: 17px; }
+      .hero-actions .button { width: 100%; }
+      .portrait-wrap { min-height: 445px; }
+      .portrait-card { inset: 0 0 20px 20px; border-radius: 115px 115px 24px 24px; }
+      .portrait-label { padding: 17px 18px; }
+      .orbit { width: 75px; height: 75px; font-size: 10px; }
+      section { padding: 76px 0; }
+      .fit-panel { padding: 34px 23px; }
+      .fit-grid, .channel-grid { grid-template-columns: 1fr; }
+      .fit-item { font-size: 15px; }
+      .channel { padding: 24px 66px 24px 23px; }
+      .story-visual, .story-copy { padding: 39px 25px; }
+      .story-visual { min-height: 340px; }
+      .final { padding-bottom: 82px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .button, .channel { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">본문 바로가기</a>
+  <nav class="nav" aria-label="주요 메뉴">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="아론PD 처음으로">
+        <span class="brand-mark"><img src="assets/aronpd/aronpd-character.png" alt="" /></span><span>아론PD</span>
+      </a>
+      <div class="nav-links">
+        <a href="#about">하는 일</a>
+        <a href="#channels">콘텐츠</a>
+        <a href="#story">이야기</a>
+        <a class="nav-cta" href="https://www.ai-conbia.com/find/">내 경험에서 첫 상품 찾기</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <header class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">AI CONTENT BUSINESS PRACTITIONER</p>
+          <h1>경험을 콘텐츠로,<strong>콘텐츠를 작은 사업으로.</strong></h1>
+          <p class="hero-copy">AI 도구를 소개하는 데서 끝나지 않습니다. 직접 써보고, 콘텐츠로 정리하고, 고객과 상품과 운영으로 연결하는 과정을 만들고 나눕니다.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="https://www.ai-conbia.com/find/">내 경험에서 첫 상품 찾기 <span aria-hidden="true">→</span></a>
+            <a class="button secondary" href="#channels">아론PD 콘텐츠 둘러보기</a>
+          </div>
+          <p class="hero-note">무료 진단으로 시작합니다 · 별도 준비물 없이 약 10분</p>
+        </div>
+        <div class="portrait-wrap" aria-label="아론PD 프로필">
+          <div class="portrait-card"><img src="./assets/aronpd/profile-aronpd.png" alt="아론PD 프로필 사진" /></div>
+          <div class="portrait-label"><b>아론PD</b><span>AI 콘텐츠 비즈니스 실전가</span></div>
+          <div class="orbit">AI, 써먹는<br />사람이 이깁니다</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="fit">
+      <div class="wrap">
+        <div class="fit-panel reveal">
+          <p class="section-kicker">Who this is for</p>
+          <h2 class="section-title">이런 고민을 하고 있다면<br />제가 해온 일이 도움이 될 수 있습니다.</h2>
+          <div class="fit-grid">
+            <div class="fit-item"><span>1</span>AI를 배우기는 했지만 어디에 써야 할지 막막합니다.</div>
+            <div class="fit-item"><span>2</span>오랫동안 쌓은 경험을 콘텐츠로 정리하고 싶습니다.</div>
+            <div class="fit-item"><span>3</span>콘텐츠는 만들지만 상품과 수익으로 이어지지 않습니다.</div>
+            <div class="fit-item"><span>4</span>혼자 운영할 수 있는 작은 AI 비즈니스를 만들고 싶습니다.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <p class="section-kicker">What I do</p>
+        <h2 class="section-title reveal">설명하고, 직접 만들고,<br />사업으로 이어지게 합니다.</h2>
+        <p class="section-lead reveal">아론PD의 콘텐츠와 교육은 ‘알게 되는 것’보다 ‘실제로 한 번 써먹어 보는 것’을 목표로 합니다.</p>
+        <div class="roles-grid">
+          <article class="role-card reveal"><span class="role-no">01 · EXPLAIN</span><h3>복잡한 AI를 쉽게 설명합니다</h3><p>새로운 AI 도구와 해외 비즈니스 사례를 기능보다 사람의 일과 선택이 어떻게 달라지는지 중심으로 풀어냅니다.</p></article>
+          <article class="role-card reveal"><span class="role-no">02 · BUILD</span><h3>직접 적용하고 실험합니다</h3><p>콘텐츠 제작, 서비스 구성, 고객 검증과 운영 자동화에 AI를 직접 연결하고 막힌 지점까지 기록합니다.</p></article>
+          <article class="role-card reveal"><span class="role-no">03 · CONNECT</span><h3>경험을 사업으로 연결합니다</h3><p>개인의 경험과 전문성에서 고객 문제를 발견하고 콘텐츠, 첫 상품, 판매와 운영이 이어지도록 돕습니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="ecosystem" id="channels">
+      <div class="wrap">
+        <p class="section-kicker">Choose your next step</p>
+        <h2 class="section-title reveal">지금 필요한 것부터<br />가볍게 시작해보세요.</h2>
+        <p class="section-lead reveal">모든 채널이 같은 이야기를 반복하지 않습니다. 각 채널은 서로 다른 역할을 맡고 있습니다.</p>
+        <div class="channel-grid">
+          <a class="channel reveal" href="https://www.youtube.com/channel/UCZSVqJV6fCeJXpSM7bJFsrA" target="_blank" rel="noopener"><small>AI 트렌드와 해외 사례</small><h3>요즘AI</h3><p>빠르게 변하는 AI를 쉬운 언어와 실제 비즈니스 사례로 이해합니다.</p><span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="channel reveal" href="https://maily.so/aron" target="_blank" rel="noopener"><small>조금 더 깊은 해설</small><h3>아론 레터</h3><p>영상에 다 담지 못한 판단, 시행착오와 바로 적용할 질문을 받아봅니다.</p><span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="channel reveal" href="https://www.threads.com/@aron_aiconbia" target="_blank" rel="noopener"><small>짧은 관점과 실험 기록</small><h3>쓰레드</h3><p>AI를 직접 써보며 발견한 생각과 시행착오를 짧고 선명하게 나눕니다.</p><span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="channel reveal" href="https://www.instagram.com/aron_aiconbia/" target="_blank" rel="noopener"><small>한눈에 보는 핵심 정리</small><h3>인스타그램</h3><p>AI 활용과 콘텐츠 비즈니스의 핵심을 카드와 이미지로 정리합니다.</p><span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="channel reveal" href="https://rbc.be-lion.com/" target="_blank" rel="noopener"><small>검색해서 다시 보는 실전 글</small><h3>블로그</h3><p>도구 사용법, 구축 과정과 사례를 단계별 글로 축적합니다.</p><span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="channel reveal" href="https://www.latpeed.com/stores/RFHM0" target="_blank" rel="noopener"><small>가이드와 실행 상품</small><h3>AI콘비아 SHOP</h3><p>아론PD가 직접 만든 가이드, 도구와 프로그램을 살펴봅니다.</p><span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="channel reveal" href="https://www.ai-conbia.com/find/"><small>나에게서 출발하는 첫 단계</small><h3>CONBI FIND</h3><p>내 경험과 강점, 시장 가능성이 만나는 첫 상품 후보를 무료로 찾아봅니다.</p><span class="arrow" aria-hidden="true">→</span></a>
+          <a class="channel reveal" href="https://www.ai-conbia.com/" target="_blank" rel="noopener"><small>경험을 사업으로 연결하는 AI 파트너</small><h3>AI콘비아</h3><p>개인의 경험과 전문성을 콘텐츠, 상품과 수익으로 연결하는 AI 비즈니스 시스템입니다.</p><span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="channel reveal" href="https://imsunggyu-ax-sales-pm.bryon2030.chatgpt.site/josu" target="_blank" rel="noopener"><small>여행업 현장을 위한 AI 전환</small><h3>여행사JOSU</h3><p>16년 여행업 경험을 바탕으로 업무 병목을 진단하고 교육과 자동화 구축으로 연결합니다.</p><span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="channel reveal" href="https://bryon2030.github.io/SpeakPT-landing/" target="_blank" rel="noopener"><small>공부가 아닌 영어 말하기 훈련</small><h3>SPEAK PT</h3><p>아는 영어를 실제로 말할 수 있도록 반복 훈련과 실전 연습을 연결한 AI 말하기 서비스입니다.</p><span class="arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap work-grid">
+        <div>
+          <p class="section-kicker">Built in public</p>
+          <h2 class="section-title reveal">말보다<br />만든 것으로<br />보여드립니다.</h2>
+          <p class="section-lead reveal">완성된 성공담만 보여주기보다, 실제로 만들고 고치며 확인한 과정을 콘텐츠와 도구로 남깁니다.</p>
+        </div>
+        <div class="work-list">
+          <div class="work-item reveal"><b>요즘AI 콘텐츠 제작 시스템</b><span>AI 도구와 해외 사례를 쉬운 영상과 다채널 콘텐츠로 전환</span></div>
+          <div class="work-item reveal"><b>아론 레터</b><span>영상의 핵심을 더 깊은 해설과 실행 질문으로 확장</span></div>
+          <div class="work-item reveal"><b>CONBI FIND</b><span>경험과 강점에서 첫 상품 후보를 발견하는 진단 흐름</span></div>
+          <div class="work-item reveal"><b>AI콘비아</b><span>개인의 경험과 전문성을 콘텐츠, 상품과 수익으로 연결하는 AI 비즈니스 시스템</span></div>
+          <div class="work-item reveal"><b>여행사JOSU</b><span>여행업 현장의 업무 병목을 진단하고 교육과 자동화 구축으로 연결하는 산업 특화 AX 서비스</span></div>
+          <div class="work-item reveal"><b>SPEAK PT</b><span>반복 훈련과 실전 상황 연습으로 영어 반응력을 키우는 AI 말하기 트레이닝 서비스</span></div>
+          <div class="work-item reveal"><b>AI 강의와 컨설팅</b><span>도구 설명보다 참여자가 자기 일에 적용해 결과를 남기도록 설계</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="story">
+      <div class="wrap story-card reveal">
+        <div class="story-visual"><span>WHY AARON PD</span><strong>좋은 경험이<br />그대로 사라지지<br />않도록.</strong><span>경험 → 콘텐츠 → 상품 → 운영</span></div>
+        <div class="story-copy">
+          <p>여러 현장과 사업을 경험하면서, 좋은 경험과 노하우가 있어도 말과 상품으로 정리하지 못하면 결국 사라진다는 것을 알게 됐습니다.</p>
+          <p>AI가 등장한 뒤에는 혼자서도 콘텐츠를 만들고, 고객 반응을 확인하고, 작은 상품을 실험할 수 있게 됐습니다. 하지만 도구만 배운다고 저절로 사업이 만들어지는 것은 아니었습니다.</p>
+          <p>그래서 지금은 AI를 직접 써보며 경험을 콘텐츠로 꺼내고, 고객과 상품과 운영으로 연결하는 방법을 만들고 나누고 있습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="wrap">
+        <div class="final-card reveal">
+          <h2>당신에게도 이미<br />상품이 될 경험이 있을 수 있습니다.</h2>
+          <p>무엇을 더 배울지 고민하기 전에, 지금까지 쌓아온 경험에서 가능성부터 찾아보세요.</p>
+          <a class="button" href="https://www.ai-conbia.com/find/">내 경험에서 첫 상품과 비즈니스 찾기 <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div><b>아론PD</b> · AI, 써먹는 사람이 이깁니다</div>
+      <div class="footer-links"><a href="https://maily.so/aron" target="_blank" rel="noopener">아론 레터</a><a href="mailto:aron@ai-conbia.com">aron@ai-conbia.com</a><a href="https://www.ai-conbia.com/">AI콘비아</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.querySelector('.nav');
+    const reveals = document.querySelectorAll('.reveal');
+    addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 12), { passive: true });
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+        if (entry.isIntersecting) { entry.target.classList.add('on'); observer.unobserve(entry.target); }
+      }), { threshold: .12 });
+      reveals.forEach((el) => observer.observe(el));
+    } else {
+      reveals.forEach((el) => el.classList.add('on'));
+    }
+  </script>
+</body>
+</html>
