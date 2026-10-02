@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="답을 채우면 나만의 브랜드 정의·고객·약속·목소리·디자인·다음 행동을 한 장으로 정리해주는 아론PD의 브랜드 워크시트">
+<meta name="robots" content="noindex, nofollow">
+<title>나 알기 · 내 브랜드 한 장</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root{
+    --cream:#F7F3E8; --paper:#FBF8F0; --deep-cream:#EFE8D6;
+    --moss:#3E5C3A; --moss-deep:#2C4329; --moss-light:#6E8B62;
+    --gold:#C9A24B; --gold-soft:#D8BC7E;
+    --ink:#2A2A24; --ink-soft:#55564C;
+    --line:#E2D9C4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Pretendard',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(var(--deep-cream) 0.5px, transparent 0.5px);
+    background-size:22px 22px;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+  /* header */
+  header{text-align:center;padding:54px 20px 30px}
+  .eyebrow{
+    display:inline-block;font-size:13px;font-weight:700;letter-spacing:.18em;
+    color:var(--moss);background:rgba(62,92,58,.08);
+    padding:7px 16px;border-radius:100px;margin-bottom:18px
+  }
+  header h1{
+    font-size:clamp(28px,5vw,42px);font-weight:800;color:var(--moss-deep);
+    letter-spacing:-.02em;line-height:1.25
+  }
+  header h1 .u{
+    background:linear-gradient(transparent 62%, var(--gold-soft) 62%);
+    padding:0 4px
+  }
+  header p{font-size:clamp(15px,2.2vw,18px);color:var(--ink-soft);margin-top:14px;max-width:560px;margin-left:auto;margin-right:auto}
+
+  /* layout */
+  .grid{display:grid;grid-template-columns:1.35fr 1fr;gap:34px;align-items:start;padding-bottom:80px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr;gap:26px}}
+
+  /* form blocks */
+  .block{
+    background:var(--paper);border:1px solid var(--line);border-radius:18px;
+    padding:26px 24px;margin-bottom:20px;
+    box-shadow:0 1px 0 rgba(0,0,0,.02)
+  }
+  .block-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}
+  .num{
+    flex:0 0 auto;width:34px;height:34px;border-radius:10px;
+    background:var(--moss);color:#fff;font-weight:800;font-size:16px;
+    display:flex;align-items:center;justify-content:center
+  }
+  .block-head h2{font-size:19px;font-weight:800;color:var(--moss-deep);letter-spacing:-.01em}
+  .block > .sub{font-size:14px;color:var(--ink-soft);margin:2px 0 18px 47px}
+  @media(max-width:520px){.block > .sub{margin-left:0}}
+
+  .field{margin-bottom:18px}
+  .field:last-child{margin-bottom:0}
+  label{display:block;font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:7px}
+  .hint{font-size:13px;color:var(--moss-light);font-weight:600;margin-bottom:8px;line-height:1.5}
+  .hint b{color:var(--moss);font-weight:700}
+  input[type=text],input[type=url],textarea,select{
+    width:100%;font-family:inherit;font-size:15px;color:var(--ink);
+    background:#fff;border:1.5px solid var(--line);border-radius:11px;
+    padding:12px 14px;transition:border-color .15s, box-shadow .15s
+  }
+  textarea{resize:vertical;min-height:64px;line-height:1.6}
+  input:focus,textarea:focus,select:focus{
+    outline:none;border-color:var(--moss);box-shadow:0 0 0 3px rgba(62,92,58,.12)
+  }
+  ::placeholder{color:#b9b29c}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:520px){.two{grid-template-columns:1fr}}
+  .arrow-row{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+  .arrow-row .ar{color:var(--gold);font-size:22px;font-weight:800;text-align:center}
+  @media(max-width:520px){.arrow-row{grid-template-columns:1fr;}.arrow-row .ar{transform:rotate(90deg)}}
+
+  /* chips */
+  .chips{display:flex;flex-wrap:wrap;gap:9px}
+  .chip{
+    font-size:14px;font-weight:600;color:var(--ink-soft);cursor:pointer;
+    background:#fff;border:1.5px solid var(--line);border-radius:100px;
+    padding:8px 15px;user-select:none;transition:all .15s
+  }
+  .chip:hover{border-color:var(--moss-light)}
+  .chip.on{background:var(--moss);border-color:var(--moss);color:#fff}
+  .chip.warn.on{background:#9c4a3c;border-color:#9c4a3c}
+
+  /* colors */
+  .colors{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:520px){.colors{grid-template-columns:1fr 1fr}}
+  .color-item label{font-size:13px;margin-bottom:6px}
+  .color-pick{display:flex;align-items:center;gap:9px;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:7px 10px}
+  .color-pick input[type=color]{width:34px;height:34px;border:none;border-radius:8px;background:none;cursor:pointer;padding:0;flex:0 0 auto}
+  .color-pick input[type=color]::-webkit-color-swatch-wrapper{padding:0}
+  .color-pick input[type=color]::-webkit-color-swatch{border:none;border-radius:7px}
+  .color-pick input[type=text]{border:none;padding:0;font-size:13.5px;font-weight:600;letter-spacing:.02em}
+  .color-pick input[type=text]:focus{box-shadow:none}
+
+  /* preview card (signature) */
+  .preview-col{position:sticky;top:24px}
+  @media(max-width:900px){.preview-col{position:static}}
+  .card{
+    background:var(--moss);color:#fff;border-radius:22px;overflow:hidden;
+    box-shadow:0 18px 50px -18px rgba(44,67,41,.6);position:relative
+  }
+  .card::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(rgba(255,255,255,.05) 0.6px,transparent 0.6px);
+    background-size:18px 18px;pointer-events:none
+  }
+  .card-inner{padding:30px 28px;position:relative}
+  .card .tag{font-size:11.5px;font-weight:700;letter-spacing:.18em;color:var(--gold-soft);margin-bottom:14px}
+  .card .name{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.25;color:#fff;min-height:32px}
+  .card .ident{font-size:15px;color:rgba(255,255,255,.86);margin-top:10px;line-height:1.55;min-height:22px}
+  .card .div{height:1px;background:rgba(255,255,255,.16);margin:20px 0}
+  .card .row{margin-bottom:15px}
+  .card .row .k{font-size:11.5px;font-weight:700;letter-spacing:.1em;color:var(--gold-soft);margin-bottom:4px}
+  .card .row .v{font-size:14.5px;color:rgba(255,255,255,.92);line-height:1.55}
+  .card .v .em{color:#fff;font-weight:700}
+  .card .slogan{
+    margin-top:22px;padding:14px 16px;background:rgba(201,162,75,.18);
+    border-left:3px solid var(--gold);border-radius:8px;
+    font-size:15px;font-weight:700;color:#fff;font-style:italic
+  }
+  .swatches{display:flex;gap:8px;margin-top:18px}
+  .sw{width:30px;height:30px;border-radius:8px;border:2px solid rgba(255,255,255,.3)}
+  .moodline{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px}
+  .moodline span{font-size:12px;font-weight:600;background:rgba(255,255,255,.12);padding:4px 10px;border-radius:100px;color:rgba(255,255,255,.9)}
+  .ph{color:rgba(255,255,255,.4)!important;font-weight:400!important;font-style:normal!important}
+
+  /* generate */
+  .gen-wrap{margin-top:18px}
+  .btn{
+    width:100%;font-family:inherit;font-size:16px;font-weight:800;cursor:pointer;
+    border:none;border-radius:13px;padding:16px;transition:transform .1s, box-shadow .2s
+  }
+  .btn-primary{background:var(--moss);color:#fff;box-shadow:0 8px 20px -8px rgba(44,67,41,.7)}
+  .btn-primary:hover{transform:translateY(-1px)}
+  .btn-primary:active{transform:translateY(0)}
+  .progress{font-size:13px;color:var(--ink-soft);text-align:center;margin-top:10px;font-weight:600}
+  .progress b{color:var(--moss)}
+
+  /* output */
+  .output{display:none;margin-top:20px;background:var(--moss-deep);border-radius:18px;padding:24px;color:#fff}
+  .output.show{display:block;animation:fade .4s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .output h3{font-size:16px;font-weight:800;color:var(--gold-soft);margin-bottom:6px}
+  .output .note{font-size:13.5px;color:rgba(255,255,255,.78);margin-bottom:16px;line-height:1.55}
+  pre.config{
+    background:rgba(0,0,0,.28);border-radius:12px;padding:18px;
+    font-family:'Pretendard',sans-serif;font-size:13.5px;line-height:1.7;
+    color:rgba(255,255,255,.95);white-space:pre-wrap;word-break:break-word;
+    max-height:340px;overflow-y:auto
+  }
+  .out-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+  .out-btns .btn{font-size:14.5px;padding:13px;flex:1 1 150px}
+  .btn-gold{background:var(--gold);color:var(--moss-deep)}
+  .btn-gold:hover{transform:translateY(-1px)}
+  .btn-ghost{background:rgba(255,255,255,.12);color:#fff}
+
+  /* AI autofill box */
+  .ai-box{
+    background:linear-gradient(135deg, var(--moss) 0%, var(--moss-deep) 100%);
+    border-radius:18px;padding:22px 22px;margin-bottom:22px;color:#fff;position:relative;overflow:hidden
+  }
+  .ai-box::before{content:"";position:absolute;inset:0;background:radial-gradient(rgba(255,255,255,.05) 0.6px,transparent 0.6px);background-size:18px 18px;pointer-events:none}
+  .ai-box h3{font-size:16px;font-weight:800;margin-bottom:5px;position:relative}
+  .ai-box .d{font-size:13.5px;color:rgba(255,255,255,.82);margin-bottom:14px;line-height:1.55;position:relative}
+  .ai-box textarea{width:100%;min-height:78px;border:none;border-radius:11px;padding:12px 14px;font-family:inherit;font-size:14.5px;line-height:1.6;resize:vertical;color:var(--ink);position:relative}
+  .ai-box textarea:focus{outline:none;box-shadow:0 0 0 3px rgba(201,162,75,.5)}
+  .ai-actions{display:flex;gap:10px;margin-top:12px;position:relative;flex-wrap:wrap}
+  .ai-btn{font-family:inherit;font-size:14.5px;font-weight:800;cursor:pointer;border:none;border-radius:11px;padding:12px 18px;transition:transform .1s, opacity .2s}
+  .ai-btn.gold{background:var(--gold);color:var(--moss-deep)}
+  .ai-btn.line{background:rgba(255,255,255,.14);color:#fff}
+  .ai-btn:hover{transform:translateY(-1px)}
+  .ai-btn:disabled{opacity:.6;cursor:default;transform:none}
+  .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:rot .7s linear infinite;vertical-align:-2px;margin-right:7px}
+  .ai-btn.gold .spin{border-color:rgba(44,67,41,.3);border-top-color:var(--moss-deep)}
+  @keyframes rot{to{transform:rotate(360deg)}}
+  .ai-msg{font-size:13px;margin-top:10px;color:rgba(255,255,255,.9);position:relative;line-height:1.5;display:none}
+  .ai-msg.show{display:block}
+
+  /* design reference drop zone */
+  .drop{border:2px dashed var(--gold-soft);border-radius:13px;background:#fff;padding:18px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+  .drop:hover,.drop.over{border-color:var(--moss);background:#fffdf6}
+  .drop:focus{outline:none;border-color:var(--moss);box-shadow:0 0 0 3px rgba(62,92,58,.12)}
+  .drop .di{font-size:14px;color:var(--ink-soft);font-weight:600}
+  .thumb{max-width:100%;max-height:170px;border-radius:10px;border:1px solid var(--line)}
+  .ai-msg2{font-size:13px;color:var(--moss);font-weight:600;margin-top:9px;line-height:1.5;display:none}
+  .ai-msg2.show{display:block}
+
+  footer{text-align:center;padding:30px 20px 50px;color:var(--ink-soft);font-size:13px}
+  footer .sl{font-weight:800;color:var(--moss);font-size:15px;margin-bottom:6px}
+
+  /* public-site responsive hardening */
+  .wrap{width:100%}
+  .grid,.form-col,.preview-col,.block,.field,.colors,.color-item,.color-pick,.key-row{min-width:0}
+  .color-pick input[type=text],.key-row input{min-width:0}
+  @media(max-width:520px){
+    header{padding:40px 18px 24px}
+    header h1{font-size:clamp(27px,8vw,34px);overflow-wrap:anywhere}
+    header p{font-size:15px}
+    .wrap{padding:0 14px}
+    .block{padding:22px 18px}
+    .ai-box{padding:20px 18px}
+    .colors{grid-template-columns:1fr}
+    .key-row{flex-direction:column}
+    .key-row .ai-btn{width:100%}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">나 알기 · STEP 1</div>
+  <h1>답만 채우면<br><span class="u">내 브랜드 한 장</span>이 완성됩니다</h1>
+  <p>여기서 정리한 한 장이, 앞으로 내 콘텐츠를 내 목소리로 만들어주는 엔진의 설계도가 됩니다. 어렵게 생각 말고, 옆 사람한테 말하듯 편하게 적어보세요.</p>
+</header>
+
+<div class="wrap">
+<div class="grid">
+
+  <!-- FORM -->
+  <div class="form-col">
+
+    <!-- guided start -->
+    <div class="ai-box">
+      <h3>✦ 처음이라 막막하면 — 예시로 시작하세요</h3>
+      <div class="d">아론PD 예시를 불러온 뒤, 내 상황에 맞게 한 칸씩 바꾸면 됩니다. 입력 내용은 이 페이지 안에서만 사용됩니다.</div>
+      <div class="ai-actions">
+        <button class="ai-btn gold" id="sampleBtn">아론PD 예시로 채우기</button>
+      </div>
+    </div>
+
+    <!-- 1 -->    <div class="block">
+      <div class="block-head"><div class="num">1</div><h2>나는 누구로 설까</h2></div>
+      <div class="sub">내가 어떤 사람으로 보이고 싶은지부터 정합니다.</div>
+      <div class="field">
+        <label>이름 (브랜드명 또는 내 이름)</label>
+        <input type="text" id="f_name" placeholder="예: 아론PD / OO연구소 / 김OO">
+      </div>
+      <div class="field">
+        <label>한 줄 정의</label>
+        <div class="hint">「나는 <b>누구</b>를 돕는 <b>어떤 사람</b>이다」 형태로 적어보세요.</div>
+        <input type="text" id="f_ident" placeholder="예: 한 분야를 오래 한 분이 AI로 1인 사업을 시작하게 돕는 동료">
+      </div>
+      <div class="field">
+        <label>내가 먼저 해본 것 (믿음을 주는 한 가지)</label>
+        <div class="hint">전문가라서가 아니라 <b>먼저 가봤기에</b> 줄 수 있는 게 뭔가요?</div>
+        <input type="text" id="f_cred" placeholder="예: 나도 똑같이 막막했지만 직접 부딪혀 길을 먼저 찾아봤다">
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="block">
+      <div class="block-head"><div class="num">2</div><h2>누구 옆에 앉을까</h2></div>
+      <div class="sub">한 사람을 떠올리세요. 모두를 도우려 하면 아무에게도 안 닿습니다.</div>
+      <div class="field">
+        <label>누구를 돕고 싶나요 — <span style="color:var(--moss)">상황으로</span></label>
+        <div class="hint">⚠️ 나이·직업으로 부르지 마세요. <b>상황으로 부르면 더 많은 사람이 "내 얘기"로</b> 받아들입니다.<br>예: 직장 다니며 준비하는 분 · 한 분야를 오래 한 분</div>
+        <input type="text" id="f_aud" placeholder="예: 평생 한 분야만 하다 이제 내 것을 시작하려는 분">
+      </div>
+      <div class="field">
+        <label>그분의 가장 큰 막막함</label>
+        <input type="text" id="f_pain" placeholder="예: AI가 좋다는데, 어디서 어떻게 시작할지 모르겠다">
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="block">
+      <div class="block-head"><div class="num">3</div><h2>무엇을 약속할까</h2></div>
+      <div class="sub">그분이 나를 만나면 어떻게 달라지나요.</div>
+      <div class="field">
+        <label>만나기 전 → 만난 후</label>
+        <div class="arrow-row">
+          <input type="text" id="f_before" placeholder="전: 막막하고 엄두가 안 남">
+          <div class="ar">→</div>
+          <input type="text" id="f_after" placeholder="후: 직접 하나를 만들어냄">
+        </div>
+      </div>
+      <div class="field">
+        <label>한 문장 약속</label>
+        <input type="text" id="f_promise" placeholder="예: 코딩 한 줄 몰라도, 첫 결과물을 손에 쥐게 해드립니다">
+      </div>
+      <div class="field">
+        <label>시그니처 한 줄 (슬로건) <span style="font-weight:500;color:var(--ink-soft)">— 있으면</span></label>
+        <input type="text" id="f_slogan" placeholder="예: AI, 써먹는 사람이 이깁니다">
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="block">
+      <div class="block-head"><div class="num">4</div><h2>어떤 목소리로 말할까</h2></div>
+      <div class="sub">같은 내용도 목소리가 다르면 다른 사람의 글이 됩니다.</div>
+      <div class="field">
+        <label>말투를 골라주세요</label>
+        <div class="chips" id="tone_chips">
+          <div class="chip" data-tone="다정한 대화체 (~잖아요, ~거든요)">다정한 대화체</div>
+          <div class="chip" data-tone="담백한 정보체 (간결·정돈)">담백한 정보체</div>
+          <div class="chip" data-tone="단단한 코치체 (이끌어주는)">단단한 코치체</div>
+          <div class="chip" data-tone="친근한 반말체 (편한 친구처럼)">친근한 반말체</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>전체를 꿰는 비유 하나 <span style="font-weight:500;color:var(--ink-soft)">— 있으면</span></label>
+        <div class="hint">콘텐츠 한 편을 <b>하나의 비유</b>로 처음부터 끝까지 잇습니다.</div>
+        <input type="text" id="f_metaphor" placeholder="예: AI = 월급 안 받는 24시간 일하는 직원 / 주방 보조">
+      </div>
+      <div class="field">
+        <label>절대 안 쓸 말 (금지어)</label>
+        <div class="hint">눌러서 켜고 끄세요. 직접 더 적어도 됩니다.</div>
+        <div class="chips" id="ban_chips">
+          <div class="chip warn" data-ban="나이 언급(50대·시니어 등)">나이 언급</div>
+          <div class="chip warn" data-ban="업종·직함 직접 언급">업종·직함</div>
+          <div class="chip warn" data-ban="과장된 단정(무조건·반드시 성공)">과장된 단정</div>
+          <div class="chip warn" data-ban="어려운 전문용어">어려운 전문용어</div>
+        </div>
+        <input type="text" id="f_ban_etc" placeholder="더 있으면 쉼표로 적어주세요 (예: 영어 약자, 명령조)" style="margin-top:10px">
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="block">
+      <div class="block-head"><div class="num">5</div><h2>어떤 옷을 입을까</h2></div>
+      <div class="sub">색과 분위기가 한눈에 "내 것"이라는 느낌을 만듭니다.</div>
+      <div class="field">
+        <label>마음에 드는 디자인이 있나요? <span style="font-weight:500;color:var(--ink-soft)">— 있으면</span></label>
+        <div class="hint">참고하고 싶은 화면을 <b>캡처해서 붙여넣거나(Ctrl+V)</b>, 끌어놓거나, 클릭해 올리면 <b>색을 뽑아 아래에 자동으로</b> 넣어드려요. 이미지는 브라우저 안에서만 처리되며 외부로 전송되지 않습니다.</div>
+        <div class="drop" id="dropZone" tabindex="0">
+          <input type="file" id="imgFile" accept="image/*" hidden>
+          <div class="drop-inner" id="dropInner"><span class="di">🎨 이미지 붙여넣기 · 끌어놓기 · 클릭해서 선택</span></div>
+          <img id="thumb" class="thumb" alt="" style="display:none">
+        </div>
+        <div class="ai-msg2" id="img_msg"></div>
+        <input type="url" id="f_reflink" placeholder="참고 사이트 링크 (선택) — 예: https://..." style="margin-top:10px">
+      </div>
+      <div class="field">
+        <div class="colors">
+          <div class="color-item">
+            <label>대표색</label>
+            <div class="color-pick"><input type="color" id="c_primary" value="#3E5C3A"><input type="text" id="c_primary_t" value="#3E5C3A"></div>
+          </div>
+          <div class="color-item">
+            <label>포인트색</label>
+            <div class="color-pick"><input type="color" id="c_accent" value="#C9A24B"><input type="text" id="c_accent_t" value="#C9A24B"></div>
+          </div>
+          <div class="color-item">
+            <label>배경색</label>
+            <div class="color-pick"><input type="color" id="c_bg" value="#F7F3E8"><input type="text" id="c_bg_t" value="#F7F3E8"></div>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>무드 키워드 (여러 개 선택)</label>
+        <div class="chips" id="mood_chips">
+          <div class="chip" data-mood="따뜻한">따뜻한</div>
+          <div class="chip" data-mood="단정한">단정한</div>
+          <div class="chip" data-mood="믿음직한">믿음직한</div>
+          <div class="chip" data-mood="활기찬">활기찬</div>
+          <div class="chip" data-mood="차분한">차분한</div>
+          <div class="chip" data-mood="실용적인">실용적인</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="block">
+      <div class="block-head"><div class="num">6</div><h2>어디로 데려갈까</h2></div>
+      <div class="sub">콘텐츠를 본 사람이 다음에 갈 한 곳을 정합니다.</div>
+      <div class="field">
+        <label>내 메인 링크 (뉴스레터·신청 페이지 등)</label>
+        <div class="hint">모든 콘텐츠의 끝은 <b>이 한 곳</b>으로 모읍니다.</div>
+        <input type="url" id="f_cta" placeholder="예: https://maily.so/aron">
+      </div>
+      <div class="field">
+        <label>무료로 주는 것 (사람을 데려오는 미끼)</label>
+        <input type="text" id="f_lead" placeholder="예: 무료 PDF 가이드 / 체크리스트">
+      </div>
+    </div>
+
+    <div class="gen-wrap">
+      <button class="btn btn-primary" id="genBtn">내 브랜드 한 장 만들기 →</button>
+      <div class="progress" id="prog">아직 <b>0</b>칸 채웠어요 · 핵심 5칸만 채워도 완성돼요</div>
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="output" id="output">
+      <h3>✓ 완성된 지침 — 이대로 복사해서 쓰세요</h3>
+      <div class="note">맨 위 "이대로 따라라" 한 줄까지 포함된 <b style="color:#fff">완성된 지침</b>입니다.<br>· <b style="color:#fff">클로드 앱</b> → "지침으로 복사" 눌러 프로젝트 <b style="color:#fff">지침 칸</b>에 붙여넣기<br>· <b style="color:#fff">클로드 코드</b> → "brand.md로 받기" 눌러 폴더에 <b style="color:#fff">파일</b>로 저장<br>· <b style="color:#fff">고객용 화면</b> → "랜딩페이지 HTML로 받기" 눌러 독립 웹페이지로 저장</div>
+      <pre class="config" id="configText"></pre>
+      <div class="out-btns">
+        <button class="btn btn-gold" id="copyBtn">지침으로 복사</button>
+        <button class="btn btn-ghost" id="dlBtn">brand.md로 받기</button>
+        <button class="btn btn-ghost" id="landingDlBtn">랜딩페이지 HTML로 받기</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PREVIEW (signature) -->
+  <div class="preview-col">
+    <div class="card">
+      <div class="card-inner">
+        <div class="tag">MY BRAND ONE-PAGER</div>
+        <div class="name" id="p_name"><span class="ph">내 브랜드 이름</span></div>
+        <div class="ident" id="p_ident"><span class="ph">한 줄 정의가 여기에</span></div>
+        <div class="div"></div>
+        <div class="row"><div class="k">이런 분을 돕습니다</div><div class="v" id="p_aud"><span class="ph">아직 비어 있어요</span></div></div>
+        <div class="row"><div class="k">약속</div><div class="v" id="p_promise"><span class="ph">아직 비어 있어요</span></div></div>
+        <div class="row"><div class="k">목소리</div><div class="v" id="p_voice"><span class="ph">말투를 골라주세요</span></div></div>
+        <div class="slogan" id="p_slogan" style="display:none"></div>
+        <div class="swatches" id="p_sw">
+          <div class="sw" style="background:#3E5C3A"></div>
+          <div class="sw" style="background:#C9A24B"></div>
+          <div class="sw" style="background:#F7F3E8"></div>
+        </div>
+        <div class="moodline" id="p_mood"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>
+  <div class="sl">AI, 써먹는 사람이 이깁니다</div>
+  나 알기 → 내 브랜드 한 장 · AI콘비아
+</footer>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const state = { tone:'', moods:[], bans:[] };
+
+  // ---- color picker sync ----
+  [['c_primary','c_primary_t'],['c_accent','c_accent_t'],['c_bg','c_bg_t']].forEach(([c,t])=>{
+    $(c).addEventListener('input',()=>{ $(t).value=$(c).value.toUpperCase(); render(); });
+    $(t).addEventListener('input',()=>{ if(/^#[0-9A-Fa-f]{6}$/.test($(t).value)){ $(c).value=$(t).value; } render(); });
+  });
+
+  // ---- single-select chips (tone) ----
+  document.querySelectorAll('#tone_chips .chip').forEach(ch=>{
+    ch.addEventListener('click',()=>{
+      const on = ch.classList.contains('on');
+      document.querySelectorAll('#tone_chips .chip').forEach(c=>c.classList.remove('on'));
+      if(!on){ ch.classList.add('on'); state.tone=ch.dataset.tone; } else { state.tone=''; }
+      render();
+    });
+  });
+
+  // ---- multi chips (mood, ban) ----
+  function multi(sel, key, attr){
+    document.querySelectorAll(sel+' .chip').forEach(ch=>{
+      ch.addEventListener('click',()=>{
+        ch.classList.toggle('on');
+        state[key] = [...document.querySelectorAll(sel+' .chip.on')].map(c=>c.dataset[attr]);
+        render();
+      });
+    });
+  }
+  multi('#mood_chips','moods','mood');
+  multi('#ban_chips','bans','ban');
+
+  // ---- live render of preview ----
+  const inputs = ['f_name','f_ident','f_cred','f_aud','f_pain','f_before','f_after','f_promise','f_slogan','f_metaphor','f_ban_etc','f_cta','f_lead'];
+  inputs.forEach(id=> $(id).addEventListener('input', render));
+
+  function setText(el, val, placeholder){
+    if(val && val.trim()){ el.textContent = val.trim(); el.classList.remove('placeholder'); }
+    else { el.innerHTML = '<span class="ph">'+placeholder+'</span>'; }
+  }
+
+  function render(){
+    // preview
+    setText($('p_name'), $('f_name').value, '내 브랜드 이름');
+    setText($('p_ident'), $('f_ident').value, '한 줄 정의가 여기에');
+    setText($('p_aud'), $('f_aud').value, '아직 비어 있어요');
+    setText($('p_promise'), $('f_promise').value, '아직 비어 있어요');
+
+    const voiceBits = [];
+    if(state.tone) voiceBits.push(state.tone.split(' (')[0]);
+    if($('f_metaphor').value.trim()) voiceBits.push('비유: '+$('f_metaphor').value.trim());
+    if(voiceBits.length){ $('p_voice').textContent = voiceBits.join(' · '); }
+    else { $('p_voice').innerHTML = '<span class="ph">말투를 골라주세요</span>'; }
+
+    const sl = $('f_slogan').value.trim();
+    if(sl){ $('p_slogan').style.display='block'; $('p_slogan').textContent = '“'+sl+'”'; }
+    else { $('p_slogan').style.display='none'; }
+
+    // swatches
+    const sws = $('p_sw').children;
+    sws[0].style.background = $('c_primary').value;
+    sws[1].style.background = $('c_accent').value;
+    sws[2].style.background = $('c_bg').value;
+
+    // mood
+    $('p_mood').innerHTML = state.moods.map(m=>'<span>'+m+'</span>').join('');
+
+    // progress (core 5: name, ident, aud, promise, tone)
+    let filled = 0;
+    ['f_name','f_ident','f_aud','f_promise'].forEach(id=>{ if($(id).value.trim()) filled++; });
+    if(state.tone) filled++;
+    $('prog').innerHTML = '핵심 <b>'+filled+'/5</b>칸 채웠어요' + (filled>=5 ? ' · 이제 만들어도 좋아요 ✓' : ' · 5칸만 채우면 완성돼요');
+  }
+
+  // ---- build config ----
+  function buildConfig(){
+    const v = id => ($(id).value||'').trim();
+    const bans = [...state.bans];
+    if(v('f_ban_etc')) v('f_ban_etc').split(',').forEach(b=>{ if(b.trim()) bans.push(b.trim()); });
+
+    const L = [];
+    L.push('아래는 내 브랜드 설정이다. 앞으로 콘텐츠를 만들 때');
+    L.push('항상 이 말투·대상·색깔·끝맺음을 그대로 따라라.');
+    L.push('주제만 주면 이 목소리로 쓰레드·카드뉴스·뉴스레터·블로그를 만든다.');
+    L.push('');
+    L.push('# 내 브랜드 한 장 (brand.md)');
+    L.push('');
+    L.push('[정체성]');
+    L.push('이름: ' + (v('f_name')||'-'));
+    L.push('한 줄 정의: ' + (v('f_ident')||'-'));
+    L.push('먼저 가본 경험: ' + (v('f_cred')||'-'));
+    L.push('');
+    L.push('[돕는 사람]');
+    L.push('대상(상황 기반): ' + (v('f_aud')||'-'));
+    L.push('가장 큰 막막함: ' + (v('f_pain')||'-'));
+    L.push('');
+    L.push('[약속]');
+    const bf=v('f_before'), af=v('f_after');
+    if(bf||af) L.push('변화: ' + (bf||'?') + ' → ' + (af||'?'));
+    L.push('한 문장 약속: ' + (v('f_promise')||'-'));
+    if(v('f_slogan')) L.push('시그니처(슬로건): ' + v('f_slogan'));
+    L.push('');
+    L.push('[목소리]');
+    L.push('말투: ' + (state.tone||'-'));
+    if(v('f_metaphor')) L.push('관통 비유: ' + v('f_metaphor'));
+    if(bans.length) L.push('금지어: ' + bans.join(', '));
+    L.push('');
+    L.push('[비주얼]');
+    L.push('대표색: ' + $('c_primary').value.toUpperCase());
+    L.push('포인트색: ' + $('c_accent').value.toUpperCase());
+    L.push('배경색: ' + $('c_bg').value.toUpperCase());
+    if(state.moods.length) L.push('무드: ' + state.moods.join(', '));
+    if(state.styleNote) L.push('디자인 느낌: ' + state.styleNote);
+    const _rl=($('f_reflink')?$('f_reflink').value.trim():''); if(_rl) L.push('참고 디자인 링크: ' + _rl);
+    L.push('');
+    L.push('[전환]');
+    L.push('메인 링크(CTA): ' + (v('f_cta')||'-'));
+    L.push('무료 제공물: ' + (v('f_lead')||'-'));
+    return L.join('\n');
+  }
+
+  $('genBtn').addEventListener('click',()=>{
+    const txt = buildConfig();
+    $('configText').textContent = txt;
+    $('output').classList.add('show');
+    $('output').scrollIntoView({behavior:'smooth', block:'nearest'});
+  });
+
+  $('copyBtn').addEventListener('click', async ()=>{
+    try{ await navigator.clipboard.writeText($('configText').textContent);
+      $('copyBtn').textContent='복사됐어요 ✓';
+      setTimeout(()=>$('copyBtn').textContent='지침으로 복사',1600);
+    }catch(e){
+      const r=document.createRange(); r.selectNode($('configText'));
+      window.getSelection().removeAllRanges(); window.getSelection().addRange(r);
+      try{document.execCommand('copy');}catch(_){}
+      $('copyBtn').textContent='복사됐어요 ✓';
+      setTimeout(()=>$('copyBtn').textContent='지침으로 복사',1600);
+    }
+  });
+
+  $('dlBtn').addEventListener('click',()=>{
+    const name = ($('f_name').value.trim()||'내브랜드').replace(/[\\/:*?"<>|]/g,'');
+    const blob = new Blob([$('configText').textContent],{type:'text/markdown;charset=utf-8'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download = name+'-brand.md';
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+
+  function buildLandingHtml(){
+    const raw=id=>($(id).value||'').trim();
+    const esc=value=>String(value||'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[ch]);
+    const color=(id,fallback)=>/^#[0-9A-Fa-f]{6}$/.test($(id).value)?$(id).value:fallback;
+    const safeUrl=value=>{ try{ const u=new URL(value); return /^(https?:)$/.test(u.protocol)?u.href:'#contact'; }catch(_){ return '#contact'; } };
+    const name=esc(raw('f_name')||'내 브랜드');
+    const ident=esc(raw('f_ident')||'당신의 경험이 누군가의 다음 행동이 되도록 돕습니다');
+    const cred=esc(raw('f_cred')||'직접 겪고 먼저 실행한 경험을 바탕으로 함께합니다');
+    const aud=esc(raw('f_aud')||'경험은 있지만 어디서부터 시작할지 막막한 분');
+    const pain=esc(raw('f_pain')||'무엇을 누구에게 어떻게 제안해야 할지 정리되지 않은 상태');
+    const before=esc(raw('f_before')||'생각과 경험이 흩어져 있음');
+    const after=esc(raw('f_after')||'고객에게 건넬 첫 제안이 선명해짐');
+    const promise=esc(raw('f_promise')||'복잡한 생각을 실행 가능한 첫 단계로 바꿔드립니다');
+    const slogan=esc(raw('f_slogan')||promise);
+    const metaphor=esc(raw('f_metaphor'));
+    const lead=esc(raw('f_lead')||'무료 시작 가이드');
+    const cta=safeUrl(raw('f_cta'));
+    const primary=color('c_primary','#3E5C3A'), accent=color('c_accent','#C9A24B'), bg=color('c_bg','#F7F3E8');
+    const moods=state.moods.length?state.moods.map(esc).join(' · '):'따뜻한 · 믿음직한 · 실용적인';
+    return `<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="${promise}"><title>${name} | ${ident}</title>
+<style>
+:root{--p:${primary};--a:${accent};--bg:${bg};--ink:#1e281e;--muted:#667065;--line:rgba(30,40,30,.13)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Noto Sans KR",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.65;word-break:keep-all}a{color:inherit}.wrap{width:min(1120px,calc(100% - 40px));margin:auto}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:24px 0}.brand{font-size:18px;font-weight:900}.nav a,.cta{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:999px;font-weight:850}.nav a{padding:11px 18px;background:var(--p);color:#fff}
+.hero{padding:68px 0 92px}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center}.eyebrow{color:var(--p);font-size:13px;font-weight:900;letter-spacing:.1em;margin-bottom:20px}.hero h1{font-size:clamp(44px,7vw,78px);line-height:1.08;letter-spacing:-.065em;margin:0 0 25px}.hero h1 span{color:var(--p)}.hero p{font-size:clamp(18px,2vw,22px);color:var(--muted);margin:0 0 32px}.actions{display:flex;flex-wrap:wrap;gap:12px}.cta{min-height:54px;padding:0 24px;background:var(--a);color:#172017;box-shadow:0 12px 28px rgba(30,40,30,.13)}.more{display:inline-flex;align-items:center;padding:0 12px;font-weight:850;color:var(--p);text-decoration:none}
+.hero-card{background:var(--p);color:#fff;border-radius:30px;padding:34px;box-shadow:0 28px 60px rgba(30,50,30,.22);position:relative;overflow:hidden}.hero-card:before{content:"";position:absolute;inset:0;background:radial-gradient(rgba(255,255,255,.12) .7px,transparent .7px);background-size:18px 18px}.hero-card>*{position:relative}.mini{color:var(--a);font-weight:900;font-size:13px;letter-spacing:.1em}.hero-card blockquote{font-size:26px;line-height:1.45;font-weight:850;margin:24px 0}.proof{border-top:1px solid rgba(255,255,255,.18);padding-top:20px;color:rgba(255,255,255,.8)}
+section{padding:88px 0}.white{background:#fff}.head{max-width:720px;margin-bottom:40px}.head small{color:var(--p);font-weight:900;letter-spacing:.1em}.head h2{font-size:clamp(32px,4vw,50px);line-height:1.18;letter-spacing:-.045em;margin:10px 0 14px;text-wrap:balance}.head p,.card p,.step p{color:var(--muted)}
+.cards,.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{padding:28px;border:1px solid var(--line);border-radius:22px}.num{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--bg);color:var(--p);font-weight:900}.card h3,.step h3{font-size:21px;margin:18px 0 8px}.card p,.step p{margin:0}
+.change{display:grid;grid-template-columns:1fr auto 1fr;gap:22px}.state{padding:34px;border-radius:24px;border:1px solid var(--line);background:rgba(255,255,255,.68)}.state.after{background:var(--p);color:#fff;border:0}.state small,.step b{color:var(--a);font-weight:900;letter-spacing:.1em}.state h3{font-size:26px;line-height:1.35;margin:14px 0 0}.arrow{display:grid;place-items:center;color:var(--a);font-size:34px;font-weight:900}.step{padding:30px 26px;border-top:4px solid var(--a);background:#fff;border-radius:0 0 20px 20px}
+.quote{text-align:center}.quote p{font-size:clamp(28px,4vw,50px);line-height:1.28;letter-spacing:-.04em;font-weight:900;max-width:1100px;margin:auto;text-wrap:balance}.quote p:before{content:"“";color:var(--a)}.quote p:after{content:"”";color:var(--a)}.quote div{margin-top:20px;color:var(--muted);font-weight:700}
+.offer{padding:90px 0}.offer-box{background:var(--p);color:#fff;border-radius:34px;padding:clamp(34px,6vw,70px);display:grid;grid-template-columns:1fr auto;gap:34px;align-items:center;box-shadow:0 30px 70px rgba(30,50,30,.22)}.offer-box small{color:var(--a);font-weight:900}.offer-box h2{font-size:clamp(34px,5vw,58px);line-height:1.15;letter-spacing:-.045em;margin:10px 0}.offer-box p{margin:0;color:rgba(255,255,255,.8);font-size:18px}.offer-box .cta{white-space:nowrap}
+footer{border-top:1px solid var(--line);padding:34px 0 50px}.foot{display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:14px}.foot b{color:var(--p)}
+@media(max-width:820px){.hero-grid,.offer-box{grid-template-columns:1fr}.cards,.steps,.change{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}section{padding:66px 0}.offer-box .cta{width:100%}}
+@media(max-width:520px){.wrap{width:min(100% - 28px,1120px)}.nav{padding:18px 0}.nav a{font-size:13px;padding:9px 13px}.hero{padding:42px 0 68px}.hero h1{font-size:42px}.actions{flex-direction:column}.cta,.more{width:100%;min-height:52px}.hero-card{padding:27px}.hero-card blockquote{font-size:22px}.state{padding:26px}.foot{flex-direction:column}}
+</style></head>
+<body>
+<header class="wrap nav"><div class="brand">${name}</div><a href="${cta}">${lead} →</a></header>
+<main>
+<section class="hero"><div class="wrap hero-grid"><div><div class="eyebrow">${moods}</div><h1>오래 쌓은 경험을<br><span>첫 사업 기회로.</span></h1><p>${ident}. ${promise}</p><div class="actions"><a class="cta" href="${cta}">${lead} 시작하기 →</a><a class="more" href="#how">어떻게 돕나요?</a></div></div><aside class="hero-card"><div class="mini">WHY ME</div><blockquote>${slogan}</blockquote><div class="proof">${cred}</div></aside></div></section>
+<section class="white"><div class="wrap"><div class="head"><small>당신의 경험은 이미 재료입니다</small><h2>이런 막막함에서 시작합니다</h2><p>${aud}이라면 지금 필요한 것은 더 많은 공부보다 첫 방향을 선명하게 만드는 일입니다.</p></div><div class="cards"><article class="card"><div class="num">01</div><h3>경험은 많은데</h3><p>무엇을 꺼내야 고객에게 가치가 되는지 아직 정리되지 않았습니다.</p></article><article class="card"><div class="num">02</div><h3>고객이 흐리고</h3><p>${pain}</p></article><article class="card"><div class="num">03</div><h3>첫 행동이 무겁고</h3><p>완벽한 사업을 만들려다 작은 실험조차 시작하지 못합니다.</p></article></div></div></section>
+<section><div class="wrap"><div class="head"><small>BEFORE → AFTER</small><h2>큰 결심보다 작은 변화부터</h2></div><div class="change"><div class="state"><small>BEFORE</small><h3>${before}</h3></div><div class="arrow">→</div><div class="state after"><small>AFTER</small><h3>${after}</h3></div></div></div></section>
+<section class="white" id="how"><div class="wrap"><div class="head"><small>HOW IT WORKS</small><h2>경험을 버리지 않고 사업으로 바꾸는 순서</h2></div><div class="steps"><article class="step"><b>STEP 01</b><h3>경험을 꺼냅니다</h3><p>오래 반복해 온 일과 자주 해결한 문제에서 나만의 재료를 찾습니다.</p></article><article class="step"><b>STEP 02</b><h3>문제 하나를 고릅니다</h3><p>누구의 어떤 막막함을 먼저 풀 것인지 한 문장으로 좁힙니다.</p></article><article class="step"><b>STEP 03</b><h3>작게 시험합니다</h3><p>AI를 활용해 첫 콘텐츠와 제안을 만들고 실제 반응을 확인합니다.</p></article></div></div></section>
+${metaphor?`<section><div class="wrap quote"><p>${metaphor}</p><div>${name}의 관통 비유</div></div></section>`:''}
+<section class="offer" id="contact"><div class="wrap"><div class="offer-box"><div><small>START SMALL</small><h2>${lead}</h2><p>${promise}</p></div><a class="cta" href="${cta}">지금 시작하기 →</a></div></div></section>
+</main><footer><div class="wrap foot"><b>${name}</b><span>${slogan}</span></div></footer>
+</body></html>`;
+  }
+
+  $('landingDlBtn').addEventListener('click',()=>{
+    const name = ($('f_name').value.trim()||'내브랜드').replace(/[\\/:*?"<>|]/g,'');
+    const blob = new Blob(['\uFEFF',buildLandingHtml()],{type:'text/html;charset=utf-8'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=name+'-landing.html';
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  });
+
+  function applyConfig(o){
+    const setv=(id,val)=>{ if(val!=null && (''+val).trim()){ $(id).value = (''+val).trim(); } };
+    setv('f_name',o.name); setv('f_ident',o.ident); setv('f_cred',o.cred);
+    setv('f_aud',o.aud); setv('f_pain',o.pain);
+    setv('f_before',o.before); setv('f_after',o.after);
+    setv('f_promise',o.promise); setv('f_slogan',o.slogan);
+    setv('f_metaphor',o.metaphor); setv('f_cta',o.cta); setv('f_lead',o.lead);
+    if(o.tone){
+      document.querySelectorAll('#tone_chips .chip').forEach(c=>c.classList.remove('on'));
+      const t=[...document.querySelectorAll('#tone_chips .chip')].find(c=>c.dataset.tone.startsWith(o.tone)||o.tone.startsWith(c.dataset.tone.split(' (')[0]));
+      if(t){ t.classList.add('on'); state.tone=t.dataset.tone; }
+    }
+    if(Array.isArray(o.moods)){
+      document.querySelectorAll('#mood_chips .chip').forEach(c=>{
+        const on=o.moods.some(m=>c.dataset.mood===m||c.dataset.mood.startsWith(m));
+        c.classList.toggle('on',on);
+      });
+      state.moods=[...document.querySelectorAll('#mood_chips .chip.on')].map(c=>c.dataset.mood);
+    }
+    if(Array.isArray(o.bans)){
+      document.querySelectorAll('#ban_chips .chip').forEach(c=>{
+        const hit=o.bans.some(b=>c.dataset.ban.startsWith(b)||b.startsWith(c.dataset.ban.split('(')[0].trim()));
+        c.classList.toggle('on',hit);
+      });
+      state.bans=[...document.querySelectorAll('#ban_chips .chip.on')].map(c=>c.dataset.ban);
+      const extra=[];
+      o.bans.forEach(b=>{ const matched=[...document.querySelectorAll('#ban_chips .chip.on')].some(c=>c.dataset.ban.startsWith(b)||b.startsWith(c.dataset.ban.split('(')[0].trim())); if(!matched) extra.push(b); });
+      if(extra.length) $('f_ban_etc').value = extra.join(', ');
+    }
+    render();
+  }
+
+  // example preset
+  const SAMPLE = {
+    name:'아론PD', ident:'한 분야를 오래 한 분이 AI로 자기 사업을 시작하게 돕는 먼저 가본 동료',
+    cred:'나도 똑같이 막막했지만 직접 부딪혀 길을 먼저 찾아봤다',
+    aud:'평생 한 분야만 하다 이제 내 것을 시작하려는 분', pain:'AI가 좋다는데 어디서 어떻게 시작할지 모르겠다',
+    before:'막막하고 엄두가 안 남', after:'직접 첫 결과물을 손에 쥠',
+    promise:'코딩 한 줄 몰라도 첫 결과물을 손에 쥐게 해드립니다', slogan:'AI, 써먹는 사람이 이깁니다',
+    tone:'다정한 대화체', metaphor:'AI = 월급 안 받는 24시간 일하는 직원',
+    bans:['나이 언급','업종·직함','과장된 단정'], moods:['따뜻한','믿음직한','실용적인'],
+    cta:'https://maily.so/aron', lead:'무료 PDF 가이드'
+  };
+  $('sampleBtn').addEventListener('click',()=>{ applyConfig(SAMPLE); });
+
+  // ===== design reference (image -> palette) =====
+  function imgMsg(t){ const m=$('img_msg'); if(!t){m.classList.remove('show');return;} m.innerHTML=t; m.classList.add('show'); }
+  const toHex = n => ('0'+Math.max(0,Math.min(255,Math.round(n))).toString(16)).slice(-2);
+  const rgbHex = c => ('#'+toHex(c.r)+toHex(c.g)+toHex(c.b)).toUpperCase();
+  function satOf(r,g,b){ const mx=Math.max(r,g,b),mn=Math.min(r,g,b); return mx===0?0:(mx-mn)/mx; }
+  function cdist(a,b){ return Math.sqrt((a.r-b.r)**2+(a.g-b.g)**2+(a.b-b.b)**2); }
+
+  function extractPalette(img){
+    const cv=document.createElement('canvas');
+    const W=120, sc=W/img.width, H=Math.max(1,Math.round(img.height*sc));
+    cv.width=W; cv.height=H;
+    const ctx=cv.getContext('2d'); ctx.drawImage(img,0,0,W,H);
+    let data; try{ data=ctx.getImageData(0,0,W,H).data; }catch(e){ return null; }
+    const counts={};
+    for(let i=0;i<data.length;i+=4){
+      if(data[i+3]<125) continue;
+      const qr=Math.round(data[i]/24)*24, qg=Math.round(data[i+1]/24)*24, qb=Math.round(data[i+2]/24)*24;
+      const k=qr+','+qg+','+qb; counts[k]=(counts[k]||0)+1;
+    }
+    const sorted=Object.entries(counts).map(([k,v])=>{const[r,g,b]=k.split(',').map(Number);return{r,g,b,v,lum:0.2126*r+0.7152*g+0.0722*b,sat:satOf(r,g,b)};}).sort((a,b)=>b.v-a.v);
+    if(!sorted.length) return null;
+    const top=sorted.slice(0,14);
+    const bg=[...top].sort((a,b)=>b.lum-a.lum)[0];
+    const primary=top.find(c=>c!==bg && c.lum<175) || top.find(c=>c!==bg) || sorted[0];
+    const accent=[...top].sort((a,b)=>b.sat-a.sat).find(c=>c!==bg && cdist(c,primary)>55) || top.find(c=>c!==bg&&c!==primary) || primary;
+    return { primary:rgbHex(primary), accent:rgbHex(accent), bg:rgbHex(bg) };
+  }
+  function setColors(p){
+    if(!p) return;
+    $('c_primary').value=p.primary; $('c_primary_t').value=p.primary;
+    $('c_accent').value=p.accent;  $('c_accent_t').value=p.accent;
+    $('c_bg').value=p.bg;          $('c_bg_t').value=p.bg;
+    render();
+  }
+
+  function handleImageBlob(blob){
+    if(!blob || !blob.type.startsWith('image/')){ imgMsg('이미지 파일만 넣어주세요.'); return; }
+    const reader=new FileReader();
+    reader.onload=()=>{
+      const url=reader.result;
+      $('thumb').src=url; $('thumb').style.display='block'; $('dropInner').style.display='none';
+      const img=new Image();
+      img.onload=async ()=>{
+        const pal=extractPalette(img);
+        if(pal){ setColors(pal); imgMsg('색 3개를 뽑아 아래에 넣었어요 ✓ 마음에 안 들면 직접 바꿔도 돼요.'); }
+        else { imgMsg('색을 못 뽑았어요. 다른 이미지로 시도해 보세요.'); }
+      };
+      img.src=url;
+    };
+    reader.readAsDataURL(blob);
+  }
+
+  (function wireDrop(){
+    const dz=$('dropZone');
+    dz.addEventListener('click',()=>$('imgFile').click());
+    dz.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); $('imgFile').click(); }});
+    $('imgFile').addEventListener('change',e=>{ const f=e.target.files[0]; if(f) handleImageBlob(f); });
+    dz.addEventListener('dragover',e=>{ e.preventDefault(); dz.classList.add('over'); });
+    dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
+    dz.addEventListener('drop',e=>{ e.preventDefault(); dz.classList.remove('over'); const f=e.dataTransfer.files[0]; if(f) handleImageBlob(f); });
+    document.addEventListener('paste',e=>{
+      const items=e.clipboardData&&e.clipboardData.items; if(!items) return;
+      for(const it of items){ if(it.type.startsWith('image/')){ const b=it.getAsFile(); if(b){ handleImageBlob(b); e.preventDefault(); } break; } }
+    });
+  })();
+  $('f_reflink').addEventListener('input', render);
+
+
+  render();
+})();
+</script>
+</body>
+</html>
