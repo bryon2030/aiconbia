@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>한권클럽 | 당신의 이야기를 한 권의 책으로</title>
+    <style>
+      :root { --g: #173f32; --c: #f7f1e7; --i: #202521; --m: #69716b; }
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: system-ui, "Noto Sans KR", sans-serif; color: var(--i); line-height: 1.7; background: #fffdf9; font-size: 18px; }
+      .w { width: min(1060px, calc(100% - 40px)); margin: auto; }
+      nav { position: sticky; top: 0; background: #fffdf9ee; border-bottom: 1px solid #eee; z-index: 5; }
+      .nav { height: 66px; display: flex; align-items: center; justify-content: space-between; }
+      .brand { font-size: 22px; font-weight: 900; color: var(--g); }
+      a { color: inherit; }
+      .btn { display: inline-block; background: var(--g); color: #fff; text-decoration: none; padding: 13px 22px; border-radius: 999px; font: inherit; font-weight: 800; border: 0; cursor: pointer; }
+      .btn:focus-visible { outline: 3px solid #ab733a; outline-offset: 5px; }
+      .hero { padding: 88px 0 70px; background: linear-gradient(135deg, #f6ecdf, #fffdf9); }
+      .ey { font-size: 14px; font-weight: 900; color: #2c624e; letter-spacing: .06em; }
+      h1, h2 { font-family: Georgia, "Noto Serif KR", serif; letter-spacing: -.04em; line-height: 1.2; }
+      h1 { font-size: clamp(40px, 7vw, 70px); margin: 14px 0 24px; }
+      h2 { font-size: clamp(30px, 5vw, 47px); margin: 8px 0 18px; }
+      h3 { font-size: 22px; line-height: 1.5; }
+      .hero p, .lead { font-size: 18px; color: #505852; max-width: 760px; }
+      .section { padding: 78px 0; }
+      .soft { background: var(--c); }
+      .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+      .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 28px; }
+      .card { background: #fff; border: 1px solid #e5ddd2; border-radius: 20px; padding: 26px; }
+      .card h3 { margin: 5px 0 8px; }
+      .card p { margin: 0; color: #505852; }
+      .quote { margin-top: 28px; background: var(--g); color: #fff; border-radius: 26px; padding: 38px; font-family: Georgia, "Noto Serif KR", serif; font-size: clamp(24px, 4vw, 38px); line-height: 1.5; }
+      .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      .step { background: #fff; border: 1px solid #e5ddd2; border-radius: 17px; padding: 20px 15px; }
+      .step b { font-size: 16px; color: #2c624e; }
+      .step strong { display: block; margin: 5px 0; }
+      .step p { font-size: 16px; color: var(--m); margin: 0; }
+      .check { margin: 11px 0; }
+      .check::before { content: "✓"; display: inline-flex; width: 23px; height: 23px; border-radius: 50%; background: #e3efe8; color: var(--g); align-items: center; justify-content: center; font-weight: 900; margin-right: 10px; }
+      .together p { margin-bottom: 20px; }
+      .reader { background: var(--g); color: #fff; }
+      .reader .ey, .reader .lead { color: #e5eee7; }
+      .cta { text-align: center; padding: 82px 0; background: #f1e6d5; }
+      footer { padding: 28px 0; color: #777; }
+      @media (max-width: 760px) {
+        .grid3, .grid2 { grid-template-columns: 1fr; }
+        .steps { grid-template-columns: repeat(2, 1fr); }
+        .hero { padding: 58px 0; }
+        .section { padding: 56px 0; }
+      }
+      @media (max-width: 460px) {
+        .steps { grid-template-columns: 1fr; }
+        .nav { gap: 12px; }
+        .nav .btn { font-size: 14px; padding: 11px 15px; }
+        .brand { font-size: 21px; }
+        h1 { font-size: 40px; }
+        .quote { padding: 26px; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav aria-label="주요 메뉴">
+      <div class="w nav">
+        <a class="brand" href="#top" style="text-decoration: none">한권클럽</a>
+        <a class="btn" href="https://daangn.com/kr/share/community/ref/invite-group/bd9FyYPalNS" target="_blank" rel="noopener noreferrer">한권클럽 참여하기</a>
+      </div>
+    </nav>
+
+    <header class="hero" id="top">
+      <div class="w">
+        <div class="ey">당신의 이야기가 한 권의 책이 되는 곳</div>
+        <h1>당신에게도<br />한 권의 이야기가 있습니다.</h1>
+        <p>글을 잘 쓰지 않아도 괜찮습니다.<br />당신의 이야기를 들려주세요.<br />함께 발견하고 기록해서<br /><strong>당신의 이름으로 된 한 권의 책을 만듭니다.</strong></p>
+        <a class="btn" href="https://daangn.com/kr/share/community/ref/invite-group/bd9FyYPalNS" target="_blank" rel="noopener noreferrer">한권클럽 참여하기</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" aria-label="한권클럽이 하는 일">
+        <div class="w grid3">
+          <div class="card"><div class="ey">01 · 이야기</div><h3>이야기합니다</h3><p>살아온 경험, 잊고 있던 순간, 꼭 남기고 싶은 이야기를 편하게 들려주세요.</p></div>
+          <div class="card"><div class="ey">02 · 발견</div><h3>함께 발견합니다</h3><p>서로 이야기를 듣고 질문하며 혼자서는 발견하기 어려웠던 이야기를 찾습니다.</p></div>
+          <div class="card"><div class="ey">03 · 한 권</div><h3>한 권으로 완성합니다</h3><p>발견한 이야기를 기록하고 엮어 당신의 이름으로 된 실제 책 한 권을 만듭니다.</p></div>
+        </div>
+      </section>
+
+      <section class="section soft">
+        <div class="w">
+          <div class="ey">당신에게 남는 것</div>
+          <h2>책 만드는 방법을 배우는 곳이 아니라<br />내 책 한 권을 완성하는 곳</h2>
+          <p class="lead">마음속에만 있던 경험이 글이 되고, 여러 편의 이야기가 당신의 이름을 담은 책이 됩니다. 한권클럽에서 완성하는 것은 <strong>내 이야기가 담긴 한 권</strong>입니다.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="w">
+          <div class="ey">이런 분과 함께합니다</div>
+          <h2>“언젠가는 내 이야기를<br />남겨보고 싶었다.”</h2>
+          <div class="check">언젠가 내 이야기를 남기고 싶었던 분</div>
+          <div class="check">글을 잘 쓰지 못해도 자기 책을 갖고 싶은 분</div>
+          <div class="check">직장·사업·가족·여행·실패·전환점 등의 경험을 남기고 싶은 분</div>
+          <div class="check">혼자서는 계속 미루게 되는 분</div>
+          <div class="quote">“당신이 작가입니다.<br />이야기는 당신이 합니다.<br />우리는 그 이야기가 한 권의 책이 되도록 돕습니다.”</div>
+        </div>
+      </section>
+
+      <section class="section soft together">
+        <div class="w">
+          <div class="ey">함께하는 이유</div>
+          <h2>혼자가 아니라,<br />함께여서 발견합니다.</h2>
+          <p class="lead">혼자 글을 쓰다 보면 내가 하고 싶은 이야기에 머물기 쉽습니다.<br />한권클럽에서는 서로의 이야기를 듣고, 질문하고, 공감하며<br />서로의 청중이자 첫 독자가 됩니다.</p>
+          <p class="lead">누군가의 <strong>“그 이야기를 더 듣고 싶어요.”</strong>라는 한마디가<br />내가 미처 중요하다고 생각하지 못했던 이야기를 꺼냅니다.</p>
+          <p class="lead">그렇게 혼자서는 발견하기 어려웠던 나만의 이야기를 함께 발견하고,<br />한 편씩 기록해 나만의 한 권으로 완성합니다.</p>
+          <div class="grid2">
+            <div class="card"><h3>서로의 청중이자<br />첫 독자가 됩니다</h3><p>이야기를 듣고 궁금한 것을 묻고,<br />마음에 남은 이야기를 이야기합니다.<br />서로의 반응 속에서 혼자서는 지나쳤던<br />나만의 이야기를 발견합니다.</p></div>
+            <div class="card"><h3>발견한 이야기를<br />한 권으로 완성합니다</h3><p>사람들의 마음에 머문 이야기와<br />내가 꼭 남기고 싶은 이야기를 한 편씩 기록합니다.<br />그렇게 쌓인 이야기를 엮어<br />나의 첫 책으로 완성합니다.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="w">
+          <div class="ey">한 권이 되는 여정</div>
+          <h2>이야기에서 시작해,<br />한 권으로 이어집니다.</h2>
+          <p class="lead">당신의 경험을 한 편씩 기록하고, 그 안에 담긴 마음을 한 권으로 엮습니다.</p>
+          <div class="steps">
+            <div class="step"><b>01</b><strong>이야기</strong><p>내가 살아온 순간을 들려줍니다.</p></div>
+            <div class="step"><b>02</b><strong>발견</strong><p>질문과 공감으로 이야기를 발견합니다.</p></div>
+            <div class="step"><b>03</b><strong>기록</strong><p>남기고 싶은 이야기를 글로 기록합니다.</p></div>
+            <div class="step"><b>04</b><strong>여러 편의 에세이</strong><p>한 편씩 쌓여 나만의 이야기가 됩니다.</p></div>
+            <div class="step"><b>05</b><strong>제목과 목차</strong><p>이야기를 담을 이름과 순서를 정합니다.</p></div>
+            <div class="step"><b>06</b><strong>한 권</strong><p>당신의 이름으로 된 책을 완성합니다.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reader">
+        <div class="w">
+          <div class="ey">첫 독자 커뮤니티</div>
+          <h2>우리는 서로의<br />첫 독자가 됩니다.</h2>
+          <p class="lead">내 이야기를 기억하고, 다음 이야기를 기다리는 사람들이 있습니다.<br />한 권을 만드는 동안 서로의 이야기를 읽고, 질문하고, 응원합니다.<br />당신의 첫 책에는 그 이야기를 함께 발견한 첫 독자들이 있습니다.</p>
+        </div>
+      </section>
+
+      <section class="cta" id="apply">
+        <div class="w">
+          <div class="ey">한권클럽</div>
+          <h2>당신의 첫 번째 이야기를<br />들려주세요.</h2>
+          <p class="lead" style="margin: 0 auto 26px">책을 써본 적이 없어도, 무엇을 써야 할지 몰라도 괜찮습니다.<br />이야기를 시작하는 것부터 함께합니다.</p>
+          <a class="btn" href="https://daangn.com/kr/share/community/ref/invite-group/bd9FyYPalNS" target="_blank" rel="noopener noreferrer">한권클럽 참여하기</a>
+        </div>
+      </section>
+    </main>
+
+    <footer><div class="w"><strong>한권클럽</strong> · 누구나 한 권의 이야기는 있다.</div></footer>
+  </body>
+</html>
