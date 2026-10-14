@@ -116,7 +116,7 @@ Error generating stack: `+f.message+`
 .sl-flow{display:flex;gap:7px;position:absolute;left:28px;right:28px;bottom:31px}.sl-flow span{flex:1;height:74px;background:#0d1d37;border:1px solid rgba(132,190,255,.12);border-radius:12px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:9px;color:#9fb5cf;padding:6px}.sl-flow span:nth-child(3){background:#163660;border-color:#4277b7;color:#bfe8ff}
 
 .sl-method{scroll-margin-top:100px;background:#eef0ea;color:#111510;border-radius:42px 42px 0 0;padding:120px 0}
-.sl-method .sl-kicker{color:#2767ae}.sl-method .sl-section-title span{color:#9ba095}.sl-method .sl-section-lead{color:#697064}
+.sl-method .sl-kicker{color:#2767ae}.sl-method .sl-section-title{word-break:keep-all}.sl-method .sl-section-title span{color:#9ba095}.sl-method .sl-section-lead{color:#697064}
 .sl-stages{margin-top:64px;border-top:1px solid #cdd1c7}
 .sl-stage{display:grid;grid-template-columns:80px 1fr 220px;align-items:center;gap:25px;padding:25px 3px;border-bottom:1px solid #cdd1c7;transition:padding .25s,background .25s}
 .sl-stage:hover{padding-left:18px;padding-right:18px;background:#e5e9df}
