@@ -8,9 +8,9 @@
       html, body { margin: 0; background: #F7F3E8; }
       * { -webkit-tap-highlight-color: transparent; }
     </style>
-    <script type="module" crossorigin src="./assets/index-Ctf8_6Pf.js?v=conbi-three-stage-20261016"></script>
-  </head>
+    <script type="module" crossorigin src="./assets/index-Ctf8_6Pf.js?v=academy-20261018"></script>
+  <style>.mobile-find{display:none}.sl-nav{width:min(1200px,calc(100% - 28px))!important}.sl-navlinks{gap:20px!important}.site-hamb{display:none}@media(max-width:800px){.site-hamb{display:block;background:transparent;color:white;border:1px solid #67819f;border-radius:7px;min-width:44px;height:44px;font-size:21px}.sl-nav>.sl-btn{display:none!important}.sl-navlinks{display:none!important}.sl-nav.site-open .sl-navlinks{display:flex!important;position:absolute;top:69px;left:0;right:0;flex-direction:column;background:#0a1e38;border:1px solid #365575;border-radius:14px;padding:16px;gap:0!important}.sl-nav.site-open .sl-navlinks a{display:block!important;width:100%;padding:16px;font-size:15px}}</style></head>
   <body>
     <div id="root"></div>
-  </body>
+  <script>const obs=new MutationObserver(()=>{const nav=document.querySelector('.sl-nav');if(nav&&!nav.querySelector('.site-hamb')){const b=document.createElement('button');b.className='site-hamb';b.textContent='☰';b.setAttribute('aria-label','메뉴 열기');b.setAttribute('aria-expanded','false');b.onclick=()=>{const open=nav.classList.toggle('site-open');b.setAttribute('aria-expanded',open)};nav.append(b);const c=document.createElement('a');c.className='mobile-find';c.href='/find/';c.textContent='무료 FIND 시작 ↗';nav.querySelector('.sl-navlinks').append(c);nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('site-open');b.setAttribute('aria-expanded','false')}));document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remove('site-open');b.setAttribute('aria-expanded','false');b.focus()}});obs.disconnect()}});obs.observe(document.body,{childList:true,subtree:true});</script></body>
 </html>
