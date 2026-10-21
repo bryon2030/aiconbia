@@ -1,5 +1,6 @@
 'use strict';
 import {published,mapBook,publicBook,pdfFromPath} from './backend.js';
+import {mountReactions} from './reactions.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let books = [...(window.HANGWON_BOOKS || [])];
@@ -36,6 +37,7 @@ async function route() {
     $('#detail').innerHTML = `<a href="#shelf" class="detail-back">← 서점으로 돌아가기</a><div class="detail-layout"><div class="detail-cover">${cover(b)}</div><div class="detail-copy"><span class="category">${esc(b.category)} · 에세이</span><h1>${esc(b.title)}</h1><p class="author">${esc(b.author)}</p><p class="description">${esc(b.description)}</p><div class="actions"><button class="primary" id="preview">책을 펼쳐 읽기 ↗</button><button class="outline" id="share">책 링크 공유하기</button></div><p class="detail-note">표지부터 마지막 문장까지, 책장을 넘기며 에세이 전문을 읽어보세요.</p></div></div><section class="detail-more"><p class="eyebrow">ABOUT THIS ESSAY</p><h2>함께하는 일상을 돌아보는 이야기</h2><p>${esc(b.summary)}</p><a class="outline" href="#shelf">서점으로 돌아가기 ↗</a></section>`;
     $('#preview').onclick = openReader;
     $('#share').onclick = share;
+    const reactions=document.createElement('div');reactions.id='book-reactions';$('#detail').append(reactions);mountReactions(b,reactions);
     if(b.pdfPath){$('#detail .category').textContent=`${b.category} · 전자책`;$('#detail .detail-note').textContent='표지부터 마지막 페이지까지, 책장을 넘기며 책 전문을 읽어보세요.';$('#detail .detail-more h2').textContent='이 책의 이야기';}
     scrollTo(0, 0);
   } else document.title = '한권클럽 서점 — 한 사람의 인생, 한 권의 발견';
@@ -61,10 +63,12 @@ function paint(prepared=null) {
   if (!closed && n === 2 && position + 1 >= content.length) $('#spread').insertAdjacentHTML('beforeend', '<div class="page blank-page" aria-hidden="true"></div>');
   $('#prev').disabled = position === 0;
   $('#next').disabled = position + n >= content.length;
+  const reactionLink=$('#reader-reactions');if(reactionLink)reactionLink.hidden=position+n<content.length;
   $('#page-status').textContent = closed ? `표지 · 본문 ${content.length - 1}쪽` : `${position}${n === 2 && position + 1 < content.length ? '–' + (position + 1) : ''} / ${content.length - 1}쪽`;
   $('.reading-area').scrollTop = 0;
 }
 async function openReader() {
+  if(!$('#reader-reactions')){const button=document.createElement('button');button.id='reader-reactions';button.className='outline';button.textContent='작가에게 응원 남기기';button.onclick=()=>{$('#reader').close();$('#book-reactions')?.scrollIntoView({behavior:'smooth'});};$('.reader-bottom').append(button);}
   returnFocus = document.activeElement;
   const book=current,epoch=++readerEpoch;
   content = book.pdfPath ? [`<div class="page image-page"><img src="${esc(book.cover)}" alt="${esc(book.title)} 표지"></div>`] : pages(book); position = 0; busy = false;
