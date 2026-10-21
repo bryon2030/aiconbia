@@ -1,5 +1,6 @@
 import {client,member,signed,pdfDocument,bucket,bookColumns,esc} from './backend.js';
 const $=s=>document.querySelector(s);
+let recovery=false;
 let authMode='login',user=null,editing=null,rows=[],active=false;
 const message=(id,text)=>$(id).textContent=text;
 function busy(value){active=value;document.querySelectorAll('#upload-form button, #my-books button, #auth-form button').forEach(b=>{if(value){b.dataset.preBusyDisabled=String(b.disabled);b.disabled=true;}else if('preBusyDisabled' in b.dataset){b.disabled=b.dataset.preBusyDisabled==='true';delete b.dataset.preBusyDisabled;}});}
@@ -9,7 +10,8 @@ function drawBooks(){
 }
 async function loadBooks(){const {data,error}=await client.from('hangwon_books').select(bookColumns).eq('owner_id',user.id).order('created_at',{ascending:false});if(error)throw error;rows=data;drawBooks();}
 async function refresh(){
- try{user=await member();$('#auth-panel').hidden=true;$('#author-panel').hidden=false;$('#account-email').textContent=user.email;await loadBooks();}
+ if(recovery){$('#auth-panel').hidden=true;$('#author-panel').hidden=true;$('#recovery-panel').hidden=false;return;}
+ try{user=await member();if(recovery){$('#auth-panel').hidden=true;$('#author-panel').hidden=true;$('#recovery-panel').hidden=false;return;}$('#auth-panel').hidden=true;$('#author-panel').hidden=false;$('#account-email').textContent=user.email;await loadBooks();}
  catch{user=null;rows=[];$('#auth-panel').hidden=false;$('#author-panel').hidden=true;$('#my-books').innerHTML='';}
 }
 function mode(value){authMode=value;$('#signup-fields').hidden=value!=='signup';$('#signup-name').required=value==='signup';$('#auth-consent').required=value==='signup';$('#password').autocomplete=value==='signup'?'new-password':'current-password';$('#password').minLength=value==='signup'?10:1;$('#auth-submit').textContent=value==='signup'?'회원가입':'로그인';document.querySelectorAll('[data-auth-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.authMode===value)));message('#auth-status','');}
@@ -27,9 +29,24 @@ $('#auth-form').onsubmit=async e=>{
  }catch(e){message('#auth-status',e.status===429?'요청이 많습니다. 잠시 후 다시 시도해 주세요.':authMode==='signup'?'가입하지 못했습니다. 이메일·비밀번호를 확인하고 다시 시도해 주세요.':'로그인하지 못했습니다. 이메일 확인 여부와 입력 내용을 확인해 주세요.');}
  finally{busy(false);$('#password').value='';}
 };
-$('#email-login').onclick=async()=>{
- const email=$('#email').value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return message('#auth-status','이메일을 먼저 입력해 주세요.');
- busy(true);try{const {error}=await client.auth.signInWithOtp({email,options:{shouldCreateUser:false,emailRedirectTo:new URL('author.html',location.href).href}});if(error)throw error;message('#auth-status','가입된 이메일이라면 로그인 링크가 도착합니다. 메일을 확인해 주세요.');}catch{message('#auth-status','로그인 메일을 보내지 못했습니다. 잠시 후 다시 시도해 주세요.');}finally{busy(false);}
+$('#forgot-password').onclick=async()=>{
+ const email=$('#email').value.trim();
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return message('#auth-status','가입한 이메일 주소를 먼저 입력해주세요.');
+ if(active)return;busy(true);
+ try{const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:new URL('author.html',location.href).href});if(error)throw error;message('#auth-status','가입한 이메일이라면 비밀번호 재설정 링크를 보내드립니다. 메일함과 스팸함을 확인해주세요.');}
+ catch{message('#auth-status','재설정 메일을 보내지 못했습니다. 잠시 후 다시 시도해주세요.');}finally{busy(false);}
+};
+$('#recovery-form').onsubmit=async e=>{
+ e.preventDefault();if(!recovery||active)return;
+ const password=$('#new-password').value;
+ if(password.length<10)return message('#recovery-status','비밀번호는 10자 이상 입력해주세요.');
+ if(password!==$('#confirm-password').value)return message('#recovery-status','두 비밀번호가 일치하지 않습니다.');
+ active=true;$('#save-password').disabled=true;
+ try{const {data,error:sessionError}=await client.auth.getUser();if(sessionError||!data.user)throw Error('expired');
+ const {error}=await client.auth.updateUser({password});if(error)throw error;
+ await client.auth.signOut();recovery=false;$('#recovery-panel').hidden=true;$('#recovery-form').reset();await refresh();mode('login');message('#auth-status','비밀번호를 변경했습니다. 이메일과 새 비밀번호로 로그인해주세요.');}
+ catch{message('#recovery-status','비밀번호를 변경하지 못했습니다. 링크가 만료됐다면 재설정 메일을 다시 요청해주세요.');}
+ finally{active=false;$('#save-password').disabled=false;}
 };
 $('#logout').onclick=async()=>{const {error}=await client.auth.signOut();if(error)return message('#account-status','로그아웃하지 못했습니다. 다시 시도해 주세요.');user=null;formReset();await refresh();};
 $('#new-book').onclick=formReset;
@@ -85,5 +102,5 @@ $('#my-books').onclick=async e=>{
 async function changeStatus(id,status){const owner=await member();const {error}=await client.from('hangwon_books').update({status}).eq('id',id).eq('owner_id',owner.id).select('id').single();if(error)throw error;await loadBooks();}
 $('#cancel-publish').onclick=()=>$('#publish-dialog').close();
 $('#publish-form').onsubmit=async e=>{e.preventDefault();if(!$('#publish-consent').checked)return;$('#confirm-publish').disabled=true;try{await changeStatus(publishing,'published');$('#publish-dialog').close();message('#account-status','서점에 공개했습니다. 내 책의 ‘책 보기’에서 확인할 수 있습니다.');}catch{message('#publish-status','공개하지 못했습니다. 표지와 PDF가 모두 저장됐는지 확인해 주세요.');}finally{$('#confirm-publish').disabled=false;}};
-client.auth.onAuthStateChange(()=>{setTimeout(()=>{if(!active)refresh();},0);});
+client.auth.onAuthStateChange((event)=>{if(event==='PASSWORD_RECOVERY')recovery=true;setTimeout(()=>{if(!active)refresh();},0);});
 mode('login');await refresh();
