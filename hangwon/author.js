@@ -4,9 +4,9 @@ let recovery=false;
 let authMode='login',user=null,editing=null,rows=[],active=false;
 const message=(id,text)=>$(id).textContent=text;
 function busy(value){active=value;document.querySelectorAll('#upload-form button, #my-books button, #auth-form button').forEach(b=>{if(value){b.dataset.preBusyDisabled=String(b.disabled);b.disabled=true;}else if('preBusyDisabled' in b.dataset){b.disabled=b.dataset.preBusyDisabled==='true';delete b.dataset.preBusyDisabled;}});}
-function formReset(){editing=null;$('#upload-form').reset();$('#upload-heading').textContent='새 책 등록';message('#upload-status','');}
+function formReset(){editing=null;$('#upload-form').reset();$('#upload-heading').textContent='새 책 등록';$('#upload-form button[type=submit]').textContent='책 저장';drawBooks();message('#upload-status','');}
 function drawBooks(){
- $('#my-books').innerHTML=rows.length?rows.map(b=>`<article class="author-book"><div><h3>${esc(b.title)}</h3><p>${esc(b.author)} · ${b.status==='published'?'서점 공개 중':'비공개 초안'}${b.page_count?' · PDF '+b.page_count+'쪽':''}</p></div><div class="actions">${b.status==='draft'?`<button class="outline" data-edit="${b.id}">계속 작성</button><button class="primary" data-publish="${b.id}" ${!b.cover_path||!b.pdf_path?'disabled':''}>서점에 공개</button>`:`<a class="outline" href="books.html#book/${b.id}">책 보기</a><button class="outline" data-hide="${b.id}">비공개로 전환</button>`}</div></article>`).join(''):'<p>등록한 책이 없습니다. 표지와 완성된 PDF로 첫 책을 등록해 보세요.</p>';
+ $('#my-books').innerHTML=rows.length?rows.map(b=>`<article class="author-book"><div><h3>${esc(b.title)}</h3><p>${esc(b.author)} · ${b.status==='published'?'서점 공개 중':'비공개 초안'}${b.page_count?' · PDF '+b.page_count+'쪽':''}</p></div><div class="actions">${b.status==='draft'?`<button class="outline" data-edit="${b.id}">${editing===b.id?'저장':'수정'}</button><button class="primary" data-publish="${b.id}" ${!b.cover_path||!b.pdf_path?'disabled':''}>서점에 공개</button>`:`<a class="outline" href="books.html#book/${b.id}">책 보기</a><button class="outline" data-hide="${b.id}">비공개로 전환</button>`}</div></article>`).join(''):'<p>등록한 책이 없습니다. 표지와 완성된 PDF로 첫 책을 등록해 보세요.</p>';
 }
 async function loadBooks(){const {data,error}=await client.from('hangwon_books').select(bookColumns).eq('owner_id',user.id).order('created_at',{ascending:false});if(error)throw error;rows=data;drawBooks();}
 async function refresh(){
@@ -95,7 +95,7 @@ let publishing=null;
 $('#my-books').onclick=async e=>{
  const button=e.target.closest('button');if(!button||active)return;
  const id=button.dataset.edit||button.dataset.publish||button.dataset.hide,b=rows.find(r=>r.id===id);if(!b)return;
- if(button.dataset.edit){editing=id;const form=$('#upload-form');for(const key of ['title','author','category','summary','description'])form.elements[key].value=b[key];form.elements.cover.value='';form.elements.pdf.value='';$('#upload-heading').textContent='책 등록 이어서 작성';message('#upload-status','이미 저장된 파일은 유지됩니다. 교체할 파일만 선택해 주세요.');form.scrollIntoView({behavior:'smooth'});}
+ if(button.dataset.edit){if(editing===id){$('#upload-form').requestSubmit();return;}editing=id;const form=$('#upload-form');for(const key of ['title','author','category','summary','description'])form.elements[key].value=b[key];form.elements.cover.value='';form.elements.pdf.value='';$('#upload-heading').textContent='책 정보 수정';$('#upload-form button[type=submit]').textContent='수정 내용 저장';drawBooks();message('#upload-status','이미 저장된 파일은 유지됩니다. 교체할 파일만 선택해 주세요.');form.scrollIntoView({behavior:'smooth'});form.elements.title.focus({preventScroll:true});}
  if(button.dataset.publish){publishing=id;$('#publish-title').textContent=b.title;$('#publish-consent').checked=false;$('#publish-dialog').showModal();}
  if(button.dataset.hide){busy(true);try{await changeStatus(id,'draft');message('#account-status','책을 비공개로 전환했습니다. 이미 발급된 파일 링크는 최대 5분 후 만료됩니다.');}catch{message('#account-status','변경하지 못했습니다. 다시 시도해 주세요.');}finally{busy(false);}}
 };

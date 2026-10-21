@@ -52,11 +52,12 @@ async function share() {
 function pages(b) {
   return [`<div class="page image-page"><img src="${b.cover}" alt="${esc(b.title)} 표지"></div>`, ...b.textPages.map((text, i) => `<article class="page essay-page" aria-label="본문 ${i + 1}페이지">${i === 0 ? `<h3>${esc(b.title)}</h3><div class="essay-author">${esc(b.author)}</div>` : `<div class="running-title">${esc(b.title)}</div>`}<p>${esc(text)}</p><span class="folio">${i + 1}</span></article>`)];
 }
-function paint() {
+function paint(prepared=null) {
   const n = step(), closed = position === 0;
   $('#spread').classList.toggle('closed', closed);
-  $('#spread').innerHTML = content.slice(position, position + n).join('');
-  if(pdfDoc)renderPdfPages(readerEpoch);
+  if(prepared)$('#spread').replaceChildren(...prepared.childNodes);
+  else $('#spread').innerHTML = content.slice(position, position + n).join('');
+  if(pdfDoc&&!prepared)renderPdfPages(readerEpoch);
   if (!closed && n === 2 && position + 1 >= content.length) $('#spread').insertAdjacentHTML('beforeend', '<div class="page blank-page" aria-hidden="true"></div>');
   $('#prev').disabled = position === 0;
   $('#next').disabled = position + n >= content.length;
@@ -77,26 +78,35 @@ async function openReader() {
     catch{if(epoch===readerEpoch)$('#page-status').textContent='PDF를 불러오지 못했습니다. 닫고 다시 열어주세요.';}
   }
 }
-async function renderPdfPages(epoch){
+async function renderPdfPages(epoch,root=$('#spread')){
  const doc=pdfDoc;
- for(const el of $('#spread').querySelectorAll('[data-pdf]')){
+ for(const el of root.querySelectorAll('[data-pdf]')){
   const canvas=el.querySelector('canvas');
-  try{const page=await doc.getPage(Number(el.dataset.pdf));if(epoch!==readerEpoch||!canvas.isConnected)return;const viewport=page.getViewport({scale:1.5});canvas.width=viewport.width;canvas.height=viewport.height;await page.render({canvasContext:canvas.getContext('2d'),viewport}).promise;if(canvas.isConnected)canvas.dataset.ready='true';}
+  try{const page=await doc.getPage(Number(el.dataset.pdf));if(epoch!==readerEpoch||!root.contains(canvas))return;const viewport=page.getViewport({scale:1.5});canvas.width=viewport.width;canvas.height=viewport.height;await page.render({canvasContext:canvas.getContext('2d'),viewport}).promise;if(root.contains(canvas))canvas.dataset.ready='true';}
   catch{if(canvas.isConnected){const note=document.createElement('p');note.textContent='이 페이지를 표시하지 못했습니다. 다시 열어주세요.';el.append(note);}}
  }
 }
-function turn(direction) {
+async function turn(direction) {
   if (busy || !$('#reader').open) return;
   const target = direction > 0 ? position + step() : position <= (mobile() ? 1 : 2) ? 0 : position - (mobile() ? 1 : 2);
   if (target < 0 || target >= content.length) return;
   busy = true;
+  const epoch=readerEpoch,prepared=document.createElement('div');
+  const count=target===0?1:mobile()?1:2;
+  prepared.innerHTML=content.slice(target,target+count).join('');
+  if(pdfDoc)await renderPdfPages(epoch,prepared);
+  await Promise.all([...prepared.querySelectorAll('img')].map(img=>img.decode().catch(()=>{})));
+  if(epoch!==readerEpoch||!$('#reader').open)return;
   const leaves = $('#spread').children;
   const leaf = leaves[direction > 0 ? Math.min(step() - 1, leaves.length - 1) : 0].cloneNode(true);
   const original=leaves[direction > 0 ? Math.min(step() - 1, leaves.length - 1) : 0].querySelector('canvas');if(original){const c=leaf.querySelector('canvas');c.width=original.width;c.height=original.height;c.getContext('2d').drawImage(original,0,0);}
   leaf.classList.add('turn-leaf'); leaf.setAttribute('aria-hidden', 'true');
   if (direction < 0) leaf.classList.add('reverse');
+  position=target;paint(prepared);
   $('#spread').append(leaf);
-  timer = setTimeout(() => { position = target; paint(); busy = false; }, matchMedia('(prefers-reduced-motion:reduce)').matches ? 5 : 580);
+  const finish=()=>{if(epoch!==readerEpoch)return;clearTimeout(timer);leaf.remove();busy=false;};
+  leaf.addEventListener('animationend',finish,{once:true});
+  timer = setTimeout(finish, matchMedia('(prefers-reduced-motion:reduce)').matches ? 5 : 700);
 }
 $('#prev').onclick = () => turn(-1); $('#next').onclick = () => turn(1);
 $('#close-reader').onclick = () => $('#reader').close();
