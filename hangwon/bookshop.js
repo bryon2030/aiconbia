@@ -1,6 +1,10 @@
 'use strict';
 import {published,mapBook,publicBook,pdfFromPath} from './backend.js';
 import {mountReactions} from './reactions.js';
+import {client} from './backend.js';
+let reactionCounts=new Map();
+async function loadReactionCounts(){try{const ids=books.map(b=>b.id);const batches=[];for(let i=0;i<ids.length;i+=100)batches.push(ids.slice(i,i+100));const results=await Promise.all(batches.map(p_books=>client.rpc('hangwon_reaction_counts',{p_books})));if(results.some(r=>r.error))throw Error('counts unavailable');reactionCounts=new Map(results.flatMap(r=>r.data||[]).map(r=>[r.book_id,r]));}catch{reactionCounts=new Map();}render();}
+function showReactionCounts(){for(const card of document.querySelectorAll('#books .card')){let id;try{id=decodeURIComponent(card.hash.slice(6));}catch{continue;}const c=reactionCounts.get(id),node=document.createElement('p');node.className='card-reactions';node.textContent=c?`♥ ${Number(c.hearts)} · 댓글 ${Number(c.comments)}`:'♥ — · 댓글 —';node.setAttribute('aria-label',c?`응원 ${Number(c.hearts)}회, 댓글 ${Number(c.comments)}개`:'응원·댓글 수를 불러오지 못했습니다');card.append(node);}}
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let books = [...(window.HANGWON_BOOKS || [])];
@@ -19,6 +23,7 @@ function render() {
   $('#empty').hidden = !!list.length;
   $('#empty').textContent = '찾으시는 책이 없습니다. 검색어나 분야를 바꿔보세요.';
   $('#books').innerHTML = list.map(b => `<a class="card" href="#book/${encodeURIComponent(b.id)}"><div class="cover-stage">${cover(b)}<span class="cover-label">에세이 전문 읽기 ↗</span></div><span class="category">${esc(b.category)}</span><h3>${esc(b.title)}</h3><span class="author">${esc(b.author)}</span><p class="summary">${esc(b.summary)}</p><div class="card-bottom"><strong>에세이</strong><span>책 펼쳐보기 ↗</span></div></a>`).join('');
+  showReactionCounts();
 }
 async function route() {
   if ($('#reader').open) $('#reader').close();
@@ -132,3 +137,6 @@ document.querySelectorAll('[data-filter]').forEach(btn => {
 window.addEventListener('hashchange', route); route();
 try{const remote=await published();const mapped=await Promise.all(remote.map(mapBook));books=[...(window.HANGWON_BOOKS||[]),...mapped];if(!$('#reader').open)await route();else render();}
 catch{if($('#catalog-status'))$('#catalog-status').textContent='작가의 새 책을 불러오지 못했습니다. 잠시 후 다시 방문해 주세요.';}
+
+await loadReactionCounts();
+window.addEventListener('hangwon-reaction-changed',loadReactionCounts);
